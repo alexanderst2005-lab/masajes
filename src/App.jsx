@@ -275,7 +275,7 @@ function App() {
         <div className="container">
           <h2 className="section-title">{t.booking.title}</h2>
           <p className="section-subtitle">{t.booking.subtitle}</p>
-          <a href="#" className="btn btn-accent" style={{fontSize: '1.2rem', padding: '1rem 3rem'}}>{t.booking.btn}</a>
+          <a href="mailto:hello@serenitymassage.com" className="btn btn-accent" style={{fontSize: '1.2rem', padding: '1rem 3rem'}}>{t.booking.btn}</a>
           
           <div className="contact-options fade-in">
             <div className="contact-option"><Phone size={20}/> {t.location.phone}</div>
