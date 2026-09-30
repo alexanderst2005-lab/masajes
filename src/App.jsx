@@ -214,7 +214,7 @@ function App() {
             <a href="#benefits" className="nav-link">{t.nav.benefits}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
             
-            <div className="lang-switch">
+            <div className="lang-switch desktop-lang">
               <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => toggleLang('en')}>EN</button>
               |
               <button className={`lang-btn ${lang === 'es' ? 'active' : ''}`} onClick={() => toggleLang('es')}>ES</button>
@@ -223,9 +223,16 @@ function App() {
             <a href="#" onClick={openBooking} className="btn btn-primary">{t.nav.book}</a>
           </nav>
           
-          <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X /> : <Menu />}
-          </button>
+          <div className="mobile-header-actions">
+            <div className="lang-switch mobile-lang">
+              <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => toggleLang('en')}>EN</button>
+              <span style={{margin: '0 0.25rem', color: 'var(--color-text)'}}>|</span>
+              <button className={`lang-btn ${lang === 'es' ? 'active' : ''}`} onClick={() => toggleLang('es')}>ES</button>
+            </div>
+            <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
         </div>
         
         {/* Mobile Menu Dropdown */}
@@ -236,12 +243,6 @@ function App() {
             <a href="#about" onClick={() => setMobileMenuOpen(false)}>{t.nav.about}</a>
             <a href="#benefits" onClick={() => setMobileMenuOpen(false)}>{t.nav.benefits}</a>
             <a href="#contact" onClick={() => setMobileMenuOpen(false)}>{t.nav.contact}</a>
-            
-            <div className="lang-switch-mobile">
-              <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => toggleLang('en')}>EN</button>
-              <span style={{margin: '0 0.5rem'}}>|</span>
-              <button className={`lang-btn ${lang === 'es' ? 'active' : ''}`} onClick={() => toggleLang('es')}>ES</button>
-            </div>
           </div>
         )}
       </header>
