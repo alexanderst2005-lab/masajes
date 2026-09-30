@@ -11,11 +11,11 @@ const content = {
     nav: { home: 'Home', services: 'Services', about: 'About', benefits: 'Benefits', contact: 'Contact', book: 'Book a Massage' },
     hero: { tag: 'Massage Therapy & Wellness', title: 'Relax. Restore. Reconnect.', desc: 'Professional massage therapy designed to help you relax, release tension, and feel your best.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
-      { id: 1, name: 'Relaxation Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 min', price: '$80', img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80' },
-      { id: 2, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 min', price: '$95', img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&q=80' },
-      { id: 3, name: 'Swedish Massage', desc: 'Long, flowing techniques designed to promote relaxation and improve circulation.', time: '60 min', price: '$85', img: 'https://images.unsplash.com/photo-1600334129128-685054110de4?auto=format&fit=crop&q=80' },
-      { id: 4, name: 'Hot Stone Massage', desc: 'Warm stones combined with massage techniques for a deeply relaxing experience.', time: '75 min', price: '$110', img: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80' },
-      { id: 5, name: 'Custom Massage', desc: "A personalized massage adapted to your body's needs.", time: '90 min', price: '$130', img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80' }
+      { id: 1, name: 'Relaxation Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 min', price: '$80', img: '/service1.jpg' },
+      { id: 2, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 min', price: '$95', img: '/service2.jpg' },
+      { id: 3, name: 'Swedish Massage', desc: 'Long, flowing techniques designed to promote relaxation and improve circulation.', time: '60 min', price: '$85', img: '/service3.jpg' },
+      { id: 4, name: 'Hot Stone Massage', desc: 'Warm stones combined with massage techniques for a deeply relaxing experience.', time: '75 min', price: '$110', img: '/service4.jpg' },
+      { id: 5, name: 'Custom Massage', desc: "A personalized massage adapted to your body's needs.", time: '90 min', price: '$130', img: '/service5.jpg' }
     ]},
     about: { title: 'Meet Your Massage Therapist', p1: 'With a passion for wellness and helping others feel their best, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", btn: 'Learn More' },
     benefits: { title: 'Why Choose Us?', list: [
@@ -57,11 +57,11 @@ const content = {
     nav: { home: 'Inicio', services: 'Servicios', about: 'Sobre mí', benefits: 'Beneficios', contact: 'Contacto', book: 'Reservar un masaje' },
     hero: { tag: 'Massage Therapy & Wellness', title: 'Relájate. Recupera. Conecta contigo.', desc: 'Masajes profesionales diseñados para ayudarte a relajarte, liberar tensiones y sentirte mejor.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
-      { id: 1, name: 'Masaje de Relajación', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 min', price: '$80', img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80' },
-      { id: 2, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 min', price: '$95', img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&q=80' },
-      { id: 3, name: 'Masaje Sueco', desc: 'Técnicas largas y fluidas diseñadas para promover la relajación y mejorar la circulación.', time: '60 min', price: '$85', img: 'https://images.unsplash.com/photo-1600334129128-685054110de4?auto=format&fit=crop&q=80' },
-      { id: 4, name: 'Masaje con Piedras Calientes', desc: 'Piedras calientes combinadas con técnicas de masaje para una experiencia profundamente relajante.', time: '75 min', price: '$110', img: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80' },
-      { id: 5, name: 'Masaje Personalizado', desc: 'Un masaje personalizado adaptado a las necesidades de tu cuerpo.', time: '90 min', price: '$130', img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80' }
+      { id: 1, name: 'Masaje de Relajación', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 min', price: '$80', img: '/service1.jpg' },
+      { id: 2, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 min', price: '$95', img: '/service2.jpg' },
+      { id: 3, name: 'Masaje Sueco', desc: 'Técnicas largas y fluidas diseñadas para promover la relajación y mejorar la circulación.', time: '60 min', price: '$85', img: '/service3.jpg' },
+      { id: 4, name: 'Masaje con Piedras Calientes', desc: 'Piedras calientes combinadas con técnicas de masaje para una experiencia profundamente relajante.', time: '75 min', price: '$110', img: '/service4.jpg' },
+      { id: 5, name: 'Masaje Personalizado', desc: 'Un masaje personalizado adaptado a las necesidades de tu cuerpo.', time: '90 min', price: '$130', img: '/service5.jpg' }
     ]},
     about: { title: 'Conoce a tu terapeuta', p1: 'Con pasión por el bienestar y por ayudar a las personas a sentirse mejor, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', btn: 'Saber más' },
     benefits: { title: '¿Por qué elegirnos?', list: [
