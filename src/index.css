@@ -226,7 +226,21 @@ header {
 
 .mobile-menu-btn {
   display: none;
-  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+  padding: 0.25rem;
+  z-index: 1000;
+}
+
+.mobile-menu-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.mobile-menu-btn:focus {
+  outline: none;
 }
 
 /* Hero Section */
@@ -806,7 +820,9 @@ footer {
     display: none;
   }
   .mobile-menu-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .mobile-menu {
