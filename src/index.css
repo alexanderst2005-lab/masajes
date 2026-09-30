@@ -941,3 +941,12 @@ footer {
     gap: 0;
   }
 }
+
+.whatsapp-fab {
+  background-color: #25D366 !important;
+  color: white !important;
+}
+
+.whatsapp-fab:hover {
+  background-color: #128C7E !important;
+}
