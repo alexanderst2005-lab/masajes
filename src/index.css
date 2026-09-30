@@ -945,6 +945,9 @@ footer {
 .whatsapp-fab {
   background-color: #25D366 !important;
   color: white !important;
+  padding: 1rem !important;
+  border-radius: 50% !important;
+  justify-content: center;
 }
 
 .whatsapp-fab:hover {
