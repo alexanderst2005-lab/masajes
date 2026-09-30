@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, Calendar, Menu, Clock, Leaf, Heart, Sparkles, X, MessageCircle } from 'lucide-react';
 import './index.css';
 
+// WhatsApp Business Number (Editable)
+const WHATSAPP_NUMBER = '1234567890'; // e.g. '1234567890' (Include country code, no +, no spaces)
+
 // Content structure to allow easy editing and bilingual support
 const content = {
   en: {
@@ -35,7 +38,20 @@ const content = {
     booking: { title: 'Ready to Relax?', subtitle: 'Give yourself the time you deserve. Book your massage session today.', btn: 'Book an Appointment' },
     location: { title: 'Find Us', address: '123 Wellness Ave, Suite 100, City, ST 12345', phone: '(555) 123-4567', email: 'hello@serenitymassage.com' },
     finalCta: { t1: 'Your body deserves a little care.', t2: 'Take a moment for yourself.', btn: 'Book Your Massage' },
-    footer: { rights: '© 2026 Serenity Massage & Wellness. All rights reserved.' }
+    footer: { rights: '© 2026 Serenity Massage & Wellness. All rights reserved.' },
+    modal: {
+      title: 'Book Your Session',
+      service: 'Select Service',
+      duration: 'Duration',
+      date: 'Date',
+      time: 'Time',
+      name: 'Full Name',
+      phone: 'Phone Number',
+      email: 'Email',
+      request: 'Special Request (Optional)',
+      confirm: 'Confirm Appointment',
+      durations: ['30 min', '60 min', '90 min', '120 min']
+    }
   },
   es: {
     nav: { home: 'Inicio', services: 'Servicios', about: 'Sobre mí', benefits: 'Beneficios', contact: 'Contacto', book: 'Reservar un masaje' },
@@ -68,7 +84,20 @@ const content = {
     booking: { title: '¿Lista para relajarte?', subtitle: 'Date el tiempo que mereces. Reserva tu sesión de masaje hoy mismo.', btn: 'Agendar una cita' },
     location: { title: 'Encuéntranos', address: '123 Wellness Ave, Suite 100, City, ST 12345', phone: '(555) 123-4567', email: 'hello@serenitymassage.com' },
     finalCta: { t1: 'Tu cuerpo merece un poco de cuidado.', t2: 'Regálate un momento para ti.', btn: 'Reservar mi masaje' },
-    footer: { rights: '© 2026 Serenity Massage & Wellness. Todos los derechos reservados.' }
+    footer: { rights: '© 2026 Serenity Massage & Wellness. Todos los derechos reservados.' },
+    modal: {
+      title: 'Reserva tu sesión',
+      service: 'Selecciona el Servicio',
+      duration: 'Duración',
+      date: 'Fecha',
+      time: 'Hora',
+      name: 'Nombre Completo',
+      phone: 'Teléfono',
+      email: 'Correo Electrónico',
+      request: 'Solicitud Especial (Opcional)',
+      confirm: 'Confirmar Cita',
+      durations: ['30 min', '60 min', '90 min', '120 min']
+    }
   }
 };
 
@@ -84,6 +113,20 @@ const getIcon = (iconName) => {
 function App() {
   const [lang, setLang] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState('');
+  
+  const [formData, setFormData] = useState({
+    service: '',
+    duration: '60 min',
+    date: '',
+    time: '',
+    name: '',
+    phone: '',
+    email: '',
+    request: ''
+  });
+
   const t = content[lang];
 
   // Scroll animation hook
@@ -98,9 +141,65 @@ function App() {
 
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [lang]); // Re-run when language changes as DOM might update
+  }, [lang]); 
 
   const toggleLang = (newLang) => setLang(newLang);
+
+  const openBooking = (e, serviceName = '') => {
+    e.preventDefault();
+    setFormData(prev => ({ ...prev, service: serviceName || t.services.list[0].name }));
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeBooking = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'auto';
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const submitBooking = (e) => {
+    e.preventDefault();
+    
+    let message = "";
+    if(lang === 'en') {
+      message = `📅 *NEW MASSAGE APPOINTMENT*
+
+👤 *Name:* ${formData.name}
+💆 *Service:* ${formData.service}
+⏱️ *Duration:* ${formData.duration}
+📆 *Date:* ${formData.date}
+🕐 *Time:* ${formData.time}
+📞 *Phone:* ${formData.phone}
+📧 *Email:* ${formData.email}
+📝 *Special Request:* ${formData.request || 'None'}
+
+"Hello! I would like to request this massage appointment. Please confirm availability."`;
+    } else {
+      message = `📅 *NUEVA SOLICITUD DE CITA*
+
+👤 *Nombre:* ${formData.name}
+💆 *Servicio:* ${formData.service}
+⏱️ *Duración:* ${formData.duration}
+📆 *Fecha:* ${formData.date}
+🕐 *Hora:* ${formData.time}
+📞 *Teléfono:* ${formData.phone}
+📧 *Correo:* ${formData.email}
+📝 *Solicitud especial:* ${formData.request || 'Ninguna'}
+
+"Hola, quisiera solicitar esta cita para masaje. Por favor, confírmame la disponibilidad."`;
+    }
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
+    closeBooking();
+  };
 
   return (
     <>
@@ -121,7 +220,7 @@ function App() {
               <button className={`lang-btn ${lang === 'es' ? 'active' : ''}`} onClick={() => toggleLang('es')}>ES</button>
             </div>
             
-            <a href="#booking" className="btn btn-primary">{t.nav.book}</a>
+            <a href="#" onClick={openBooking} className="btn btn-primary">{t.nav.book}</a>
           </nav>
           
           <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -131,7 +230,7 @@ function App() {
       </header>
 
       {/* Floating Action Button */}
-      <a href="#booking" className="fab">
+      <a href="#" onClick={openBooking} className="fab">
         <Calendar size={20} />
         {t.services.book}
       </a>
@@ -145,7 +244,7 @@ function App() {
             <h1 className="hero-title">{t.hero.title}</h1>
             <p className="hero-desc">{t.hero.desc}</p>
             <div className="hero-buttons">
-              <a href="#booking" className="btn btn-primary">{t.hero.bookBtn}</a>
+              <a href="#" onClick={openBooking} className="btn btn-primary">{t.hero.bookBtn}</a>
               <a href="#services" className="btn btn-outline">{t.hero.exploreBtn}</a>
             </div>
             <p className="hero-note">{t.hero.note}</p>
@@ -170,7 +269,7 @@ function App() {
                     <span className="service-time"><Clock size={14} style={{display:'inline', marginRight: '4px', verticalAlign: 'middle'}}/> {service.time}</span>
                     <span className="service-price">{service.price}</span>
                   </div>
-                  <a href="#booking" className="btn btn-primary" style={{padding: '0.5rem 1.2rem'}}>{t.services.book}</a>
+                  <a href="#" onClick={(e) => openBooking(e, service.name)} className="btn btn-primary" style={{padding: '0.5rem 1.2rem'}}>{t.services.book}</a>
                 </div>
               </div>
             </div>
@@ -251,7 +350,7 @@ function App() {
             ))}
           </div>
           <div className="menu-action fade-in">
-            <a href="#booking" className="btn btn-outline">{t.menu.bookBtn}</a>
+            <a href="#" onClick={openBooking} className="btn btn-outline">{t.menu.bookBtn}</a>
           </div>
         </div>
       </section>
@@ -271,11 +370,11 @@ function App() {
       </section>
 
       {/* Booking CTA */}
-      <section id="booking" className="booking-section fade-in">
+      <section className="booking-section fade-in">
         <div className="container">
-          <h2 className="section-title">{t.booking.title}</h2>
-          <p className="section-subtitle">{t.booking.subtitle}</p>
-          <a href="mailto:hello@serenitymassage.com" className="btn btn-accent" style={{fontSize: '1.2rem', padding: '1rem 3rem'}}>{t.booking.btn}</a>
+          <h2 className="section-title" style={{color:'white'}}>{t.booking.title}</h2>
+          <p className="section-subtitle" style={{color:'white'}}>{t.booking.subtitle}</p>
+          <a href="#" onClick={openBooking} className="btn btn-accent" style={{fontSize: '1.2rem', padding: '1rem 3rem'}}>{t.booking.btn}</a>
           
           <div className="contact-options fade-in">
             <div className="contact-option"><Phone size={20}/> {t.location.phone}</div>
@@ -308,7 +407,7 @@ function App() {
         <div className="final-cta-content">
           <h2>{t.finalCta.t1}</h2>
           <p>{t.finalCta.t2}</p>
-          <a href="#booking" className="btn btn-accent">{t.finalCta.btn}</a>
+          <a href="#" onClick={openBooking} className="btn btn-accent">{t.finalCta.btn}</a>
         </div>
       </section>
 
@@ -344,6 +443,77 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Booking Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={closeBooking}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeBooking}><X size={24} /></button>
+            <h3 className="modal-title">{t.modal.title}</h3>
+            
+            <form onSubmit={submitBooking} className="booking-form">
+              <div className="form-group">
+                <label>{t.modal.service}</label>
+                <select name="service" value={formData.service} onChange={handleFormChange} required>
+                  {t.services.list.map(s => (
+                    <option key={s.id} value={s.name}>{s.name}</option>
+                  ))}
+                  {t.menu.items.map((m, i) => (
+                    <option key={`m-${i}`} value={m.name}>{m.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>{t.modal.duration}</label>
+                  <select name="duration" value={formData.duration} onChange={handleFormChange} required>
+                    {t.modal.durations.map((d, i) => (
+                      <option key={i} value={d}>{d}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label>{t.modal.date}</label>
+                  <input type="date" name="date" value={formData.date} onChange={handleFormChange} required />
+                </div>
+                
+                <div className="form-group">
+                  <label>{t.modal.time}</label>
+                  <input type="time" name="time" value={formData.time} onChange={handleFormChange} required />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>{t.modal.name}</label>
+                <input type="text" name="name" value={formData.name} onChange={handleFormChange} placeholder="John Doe" required />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>{t.modal.phone}</label>
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} placeholder="+1 234 567 890" required />
+                </div>
+                
+                <div className="form-group">
+                  <label>{t.modal.email}</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleFormChange} placeholder="email@example.com" required />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>{t.modal.request}</label>
+                <textarea name="request" value={formData.request} onChange={handleFormChange} rows="3" placeholder="..."></textarea>
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100" style={{marginTop: '1rem', width: '100%'}}>
+                {t.modal.confirm}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }

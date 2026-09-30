@@ -812,3 +812,95 @@ footer {
     font-size: 2.5rem;
   }
 }
+
+/* Modal Booking Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--color-card-bg);
+  padding: 2.5rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: var(--color-text-light);
+}
+
+.modal-close:hover {
+  color: var(--color-text);
+}
+
+.modal-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--color-primary-dark);
+}
+
+.booking-form .form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-form .form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.booking-form .form-row .form-group {
+  flex: 1;
+}
+
+.booking-form label {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: #FAFAFA;
+  transition: border-color 0.3s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: white;
+}
+
+@media (max-width: 600px) {
+  .booking-form .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
