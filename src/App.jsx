@@ -227,6 +227,23 @@ function App() {
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
+        
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="mobile-menu fade-in visible">
+            <a href="#home" onClick={() => setMobileMenuOpen(false)}>{t.nav.home}</a>
+            <a href="#services" onClick={() => setMobileMenuOpen(false)}>{t.nav.services}</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)}>{t.nav.about}</a>
+            <a href="#benefits" onClick={() => setMobileMenuOpen(false)}>{t.nav.benefits}</a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)}>{t.nav.contact}</a>
+            
+            <div className="lang-switch-mobile">
+              <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => toggleLang('en')}>EN</button>
+              <span style={{margin: '0 0.5rem'}}>|</span>
+              <button className={`lang-btn ${lang === 'es' ? 'active' : ''}`} onClick={() => toggleLang('es')}>ES</button>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Floating Action Button */}
@@ -281,7 +298,7 @@ function App() {
       <section id="about" className="about-section fade-in">
         <div className="container about-grid">
           <div className="about-img-wrapper fade-in">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80" alt="Massage Therapist" className="about-img" />
+            <img src="/about.jpg" alt="Massage Therapist" className="about-img" />
           </div>
           <div className="about-content fade-in">
             <h2 className="about-title">{t.about.title}</h2>
