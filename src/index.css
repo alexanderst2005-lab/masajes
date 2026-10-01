@@ -301,14 +301,14 @@ header {
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: 4rem;
   line-height: 1.1;
   margin-bottom: 1.5rem;
   color: var(--color-primary-dark);
 }
 
 .hero-desc {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--color-text-light);
   margin-bottom: 2.5rem;
   max-width: 90%;
@@ -334,7 +334,7 @@ section {
 
 .section-title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   color: var(--color-primary-dark);
 }
@@ -800,7 +800,7 @@ footer {
 /* Responsive Design */
 @media (max-width: 992px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
   .about-grid {
     grid-template-columns: 1fr;
@@ -902,8 +902,20 @@ footer {
     padding-top: 120px;
     justify-content: center;
   }
-  .section-title {
+  .hero-title {
     font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .hero-desc {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  .hero-tag {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
   }
   .final-cta h2 {
     font-size: 2.5rem;
