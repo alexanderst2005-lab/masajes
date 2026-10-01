@@ -293,9 +293,14 @@ function App() {
                 <h3 className="service-title">{service.name}</h3>
                 <p className="service-desc">{service.desc}</p>
                 <div className="service-footer">
-                  <div className="service-meta">
-                    <span className="service-time"><Clock size={14} style={{display:'inline', marginRight: '4px', verticalAlign: 'middle'}}/> {service.time}</span>
-                    <span className="service-price">{service.price}</span>
+                  <div className="service-options">
+                    {service.options.map((opt, j) => (
+                      <div key={j} className="service-option-row">
+                        <span className="service-time">{opt.time}</span>
+                        <span className="service-dots"></span>
+                        <span className="service-price">{opt.price}</span>
+                      </div>
+                    ))}
                   </div>
                   <a href="#" onClick={(e) => openBooking(e, service.name)} className="btn btn-primary" style={{padding: '0.5rem 1.2rem'}}>{t.services.book}</a>
                 </div>
