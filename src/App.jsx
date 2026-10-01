@@ -9,16 +9,16 @@ const WHATSAPP_NUMBER = '590690221868'; // e.g. '1234567890' (Include country co
 const content = {
   en: {
     nav: { home: 'Home', services: 'Services', about: 'About', benefits: 'Benefits', contact: 'Contact', book: 'Book a Massage' },
-    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Professional massage therapy designed to help you relax, release tension, and feel your best by Leidy Solomons.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
+    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'With over 5 years of professional experience, Leidy Solomons offers mobile massage therapy designed to help you relax, release tension, and feel your best.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
-      { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 / 90 min', price: 'From $90', options: [{time: '60 min', price: '$90'}, {time: '90 min', price: '$130'}], img: '/service1.jpg' },
-      { id: 2, name: 'Couple Massage', desc: 'A shared relaxation experience for two, side by side.', time: '60 / 90 min', price: 'From $180', options: [{time: '60 min', price: '$180'}, {time: '90 min', price: '$260'}], img: '/service2.jpg' },
-      { id: 3, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 / 90 min', price: 'From $135', options: [{time: '60 min', price: '$135'}, {time: '90 min', price: '$155'}], img: '/service3.jpg' },
-      { id: 4, name: 'Group Massages', desc: 'For groups of three or more people, a 5% discount per person applies. Massages start at $85.', time: 'Flexible', price: 'From $85', options: [{time: 'Per person', price: 'From $85'}], img: '/service4.jpg' },
-      { id: 5, name: 'Prenatal Massage', desc: 'Gentle, soothing techniques designed specifically for expecting mothers.', time: '60 / 90 min', price: 'From $100', options: [{time: '60 min', price: '$100'}, {time: '90 min', price: '$125'}], img: '/service5.jpg' },
-      { id: 6, name: 'Yacht Massage', desc: 'A luxurious massage experience aboard your yacht. Pure relaxation on the water.', time: '60 min', price: '$100', options: [{time: '60 min', price: '$100'}], img: '/service1.jpg' }
+      { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 / 90 Minutes', price: 'From $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/service1.jpg' },
+      { id: 2, name: 'Couple Massage', desc: 'A shared relaxation experience for two, side by side.', time: '60 / 90 Minutes', price: 'From $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/service2.jpg' },
+      { id: 3, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 / 90 Minutes', price: 'From $135 USD', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}], img: '/service3.jpg' },
+      { id: 4, name: 'Group Massages', desc: 'For groups of three or more people, a 5% discount per person applies; massages start at $85.00.', time: 'Flexible', price: 'From $85 USD', options: [{time: 'Per person', price: 'From $85 USD'}], img: '/service4.jpg' },
+      { id: 5, name: 'Prenatal Massage', desc: 'Gentle, soothing techniques designed specifically for expecting mothers.', time: '60 / 90 Minutes', price: 'From $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/service5.jpg' },
+      { id: 6, name: 'Yacht Massage', desc: 'A luxurious massage experience aboard your yacht. Pure relaxation on the water.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/service1.jpg' }
     ]},
-    about: { title: 'Meet Leidy Solomons', p1: 'With a passion for wellness and helping others feel their best, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", btn: 'Learn More' },
+    about: { title: 'Meet Leidy Solomons', p1: 'With over 5 years of experience and a passion for wellness, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", btn: 'Learn More' },
     benefits: { title: 'Why Choose Us?', list: [
       { title: 'PERSONALIZED CARE', desc: 'Every session is tailored to your needs.', icon: 'Heart' },
       { title: 'RELAXING ENVIRONMENT', desc: 'A peaceful space designed for your comfort.', icon: 'Leaf' },
@@ -27,12 +27,12 @@ const content = {
     ]},
     gallery: { title: 'A Moment Just for You', subtitle: 'Step away from the stress of everyday life and give your body and mind the time they deserve.' },
     menu: { title: 'Massage Menu', subtitle: 'Find the perfect treatment for your needs.', bookBtn: 'Book Your Session', items: [
-      { name: 'Relaxing Massage', desc: 'Light to medium pressure for pure relaxation.', options: [{time: '60 min', price: '$90'}, {time: '90 min', price: '$130'}] },
-      { name: 'Couple Massage', desc: 'Shared relaxation for two.', options: [{time: '60 min', price: '$180'}, {time: '90 min', price: '$260'}] },
-      { name: 'Deep Tissue Massage', desc: 'Firm pressure to target deep muscle layers.', options: [{time: '60 min', price: '$135'}, {time: '90 min', price: '$155'}] },
-      { name: 'Group Massages', desc: '5% discount for 3+ people.', options: [{time: 'Per person', price: 'From $85'}] },
-      { name: 'Prenatal Massage', desc: 'Safe and comforting for expecting mothers.', options: [{time: '60 min', price: '$100'}, {time: '90 min', price: '$125'}] },
-      { name: 'Yacht Massage', desc: 'Luxury massage on the water.', options: [{time: '60 min', price: '$100'}] }
+      { name: 'Relaxing Massage', desc: 'Light to medium pressure for pure relaxation.', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}] },
+      { name: 'Couple Massage', desc: 'Shared relaxation for two.', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}] },
+      { name: 'Deep Tissue Massage', desc: 'Firm pressure to target deep muscle layers.', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}] },
+      { name: 'Group Massages', desc: 'For groups of 3+ people, a 5% discount per person applies; massages start at $85.00.', options: [{time: 'Per person', price: 'From $85 USD'}] },
+      { name: 'Prenatal Massage', desc: 'Safe and comforting for expecting mothers.', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}] },
+      { name: 'Yacht Massage', desc: 'Luxury massage on the water.', options: [{time: '60 Minutes', price: '$100 USD'}] }
     ]},
     testimonials: { title: 'What Our Clients Say', list: [
       { text: "Such a relaxing experience. I left feeling completely refreshed.", author: "Sarah M." },
@@ -59,16 +59,16 @@ const content = {
   },
   es: {
     nav: { home: 'Inicio', services: 'Servicios', about: 'Sobre mí', benefits: 'Beneficios', contact: 'Contacto', book: 'Reservar un masaje' },
-    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Terapia de masajes profesional diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor por Leidy Solomons.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
+    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Con más de 5 años de experiencia profesional, Leidy Solomons ofrece terapia de masajes a domicilio diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
-      { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 / 90 min', price: 'Desde $90', options: [{time: '60 min', price: '$90'}, {time: '90 min', price: '$130'}], img: '/service1.jpg' },
-      { id: 2, name: 'Masaje en Pareja', desc: 'Una experiencia de relajación compartida para dos, lado a lado.', time: '60 / 90 min', price: 'Desde $180', options: [{time: '60 min', price: '$180'}, {time: '90 min', price: '$260'}], img: '/service2.jpg' },
-      { id: 3, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 / 90 min', price: 'Desde $135', options: [{time: '60 min', price: '$135'}, {time: '90 min', price: '$155'}], img: '/service3.jpg' },
-      { id: 4, name: 'Masajes Grupales', desc: 'Para grupos de tres o más personas, se aplica un 5% de descuento por persona. Los masajes comienzan en $85.', time: 'Flexible', price: 'Desde $85', options: [{time: 'Por persona', price: 'Desde $85'}], img: '/service4.jpg' },
-      { id: 5, name: 'Masaje Prenatal', desc: 'Técnicas suaves diseñadas especialmente para futuras madres.', time: '60 / 90 min', price: 'Desde $100', options: [{time: '60 min', price: '$100'}, {time: '90 min', price: '$125'}], img: '/service5.jpg' },
-      { id: 6, name: 'Masaje en Yate', desc: 'Una experiencia de masaje de lujo a bordo de tu yate. Relajación pura en el agua.', time: '60 min', price: '$100', options: [{time: '60 min', price: '$100'}], img: '/service1.jpg' }
+      { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 / 90 Minutes', price: 'Desde $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/service1.jpg' },
+      { id: 2, name: 'Masaje en Pareja', desc: 'Una experiencia de relajación compartida para dos, lado a lado.', time: '60 / 90 Minutes', price: 'Desde $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/service2.jpg' },
+      { id: 3, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 / 90 Minutes', price: 'Desde $135 USD', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}], img: '/service3.jpg' },
+      { id: 4, name: 'Masajes Grupales', desc: 'Para grupos de tres o más personas, se aplica un 5% de descuento por persona; los masajes comienzan en $85.00.', time: 'Flexible', price: 'Desde $85 USD', options: [{time: 'Por persona', price: 'Desde $85 USD'}], img: '/service4.jpg' },
+      { id: 5, name: 'Masaje Prenatal', desc: 'Técnicas suaves diseñadas especialmente para futuras madres.', time: '60 / 90 Minutes', price: 'Desde $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/service5.jpg' },
+      { id: 6, name: 'Masaje en Yate', desc: 'Una experiencia de masaje de lujo a bordo de tu yate. Relajación pura en el agua.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/service1.jpg' }
     ]},
-    about: { title: 'Conoce a Leidy Solomons', p1: 'Con pasión por el bienestar y por ayudar a las personas a sentirse mejor, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', btn: 'Saber más' },
+    about: { title: 'Conoce a Leidy Solomons', p1: 'Con más de 5 años de experiencia y una pasión por el bienestar, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', btn: 'Saber más' },
     benefits: { title: '¿Por qué elegirnos?', list: [
       { title: 'ATENCIÓN PERSONALIZADA', desc: 'Cada sesión se adapta a tus necesidades.', icon: 'Heart' },
       { title: 'AMBIENTE RELAJANTE', desc: 'Un espacio tranquilo pensado para tu comodidad.', icon: 'Leaf' },
@@ -77,12 +77,12 @@ const content = {
     ]},
     gallery: { title: 'Un momento solo para ti', subtitle: 'Aléjate del estrés de la vida diaria y dale a tu cuerpo y mente el tiempo que merecen.' },
     menu: { title: 'Menú de Masajes', subtitle: 'Encuentra el tratamiento perfecto para ti.', bookBtn: 'Reservar mi sesión', items: [
-      { name: 'Masaje Relajante', desc: 'Presión de ligera a media para relajación pura.', options: [{time: '60 min', price: '$90'}, {time: '90 min', price: '$130'}] },
-      { name: 'Masaje en Pareja', desc: 'Relajación compartida para dos.', options: [{time: '60 min', price: '$180'}, {time: '90 min', price: '$260'}] },
-      { name: 'Masaje de Tejido Profundo', desc: 'Presión firme para llegar a capas musculares profundas.', options: [{time: '60 min', price: '$135'}, {time: '90 min', price: '$155'}] },
-      { name: 'Masajes Grupales', desc: '5% de descuento para 3+ personas.', options: [{time: 'Por persona', price: 'Desde $85'}] },
-      { name: 'Masaje Prenatal', desc: 'Seguro y reconfortante para futuras madres.', options: [{time: '60 min', price: '$100'}, {time: '90 min', price: '$125'}] },
-      { name: 'Masaje en Yate', desc: 'Masaje de lujo en el agua.', options: [{time: '60 min', price: '$100'}] }
+      { name: 'Masaje Relajante', desc: 'Presión de ligera a media para relajación pura.', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}] },
+      { name: 'Masaje en Pareja', desc: 'Relajación compartida para dos.', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}] },
+      { name: 'Masaje de Tejido Profundo', desc: 'Presión firme para llegar a capas musculares profundas.', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}] },
+      { name: 'Masajes Grupales', desc: 'Para grupos de 3+ personas, se aplica un 5% de descuento por persona; los masajes comienzan en $85.00.', options: [{time: 'Por persona', price: 'Desde $85 USD'}] },
+      { name: 'Masaje Prenatal', desc: 'Seguro y reconfortante para futuras madres.', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}] },
+      { name: 'Masaje en Yate', desc: 'Masaje de lujo en el agua.', options: [{time: '60 Minutes', price: '$100 USD'}] }
     ]},
     testimonials: { title: 'Lo que dicen nuestros clientes', list: [
       { text: "Una experiencia muy relajante. Salí sintiéndome completamente renovada.", author: "Sarah M." },
