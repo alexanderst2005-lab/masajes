@@ -518,6 +518,54 @@ section {
   color: var(--color-text-light);
 }
 
+/* Service Areas */
+.areas-section {
+  background-color: #2F3A2B;
+  color: #F9F6F0;
+  padding: 6rem 0;
+}
+
+.areas-section .areas-title {
+  color: #F9F6F0;
+}
+
+.areas-section .areas-subtitle {
+  color: rgba(249, 246, 240, 0.8);
+}
+
+.areas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.area-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(249, 246, 240, 0.2);
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.area-pill:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(249, 246, 240, 0.4);
+  transform: translateY(-2px);
+}
+
+.area-icon {
+  opacity: 0.8;
+}
+
 /* Gallery */
 .gallery-grid {
   display: grid;

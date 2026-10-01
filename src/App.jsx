@@ -25,6 +25,7 @@ const content = {
       { title: 'PROFESSIONAL SERVICE', desc: 'Quality care with attention to every detail.', icon: 'Sparkles' },
       { title: 'YOUR WELLNESS MATTERS', desc: 'Your comfort and wellbeing are always our priority.', icon: 'Heart' }
     ]},
+    areas: { title: 'Service Areas', subtitle: 'Where elite wellness meets the Caribbean shoreline.', list: ['Terres Basses', 'Simpson Bay', 'Orient Bay', 'Pointe Pirouette', 'Cupecoy', 'Grand Case', 'Beacon Hill / Maho', 'The Hills', 'Philipsburg', 'Indigo Bay', 'Fourteen', 'Oyster Pond', 'Upper Princess Qtr', 'Pointe Blanche', 'Blue Marlin', 'Marigot'] },
     gallery: { title: 'A Moment Just for You', subtitle: 'Step away from the stress of everyday life and give your body and mind the time they deserve.' },
     menu: { title: 'Massage Menu', subtitle: 'Find the perfect treatment for your needs.', bookBtn: 'Book Your Session', items: [
       { name: 'Relaxing Massage', desc: 'Light to medium pressure for pure relaxation.', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}] },
@@ -75,6 +76,7 @@ const content = {
       { title: 'SERVICIO PROFESIONAL', desc: 'Atención de calidad cuidando cada detalle.', icon: 'Sparkles' },
       { title: 'TU BIENESTAR ES IMPORTANTE', desc: 'Tu comodidad y bienestar son nuestra prioridad.', icon: 'Heart' }
     ]},
+    areas: { title: 'Zonas de Servicio', subtitle: 'Donde el bienestar de élite se encuentra con la costa del Caribe.', list: ['Terres Basses', 'Simpson Bay', 'Orient Bay', 'Pointe Pirouette', 'Cupecoy', 'Grand Case', 'Beacon Hill / Maho', 'The Hills', 'Philipsburg', 'Indigo Bay', 'Fourteen', 'Oyster Pond', 'Upper Princess Qtr', 'Pointe Blanche', 'Blue Marlin', 'Marigot'] },
     gallery: { title: 'Un momento solo para ti', subtitle: 'Aléjate del estrés de la vida diaria y dale a tu cuerpo y mente el tiempo que merecen.' },
     menu: { title: 'Menú de Masajes', subtitle: 'Encuentra el tratamiento perfecto para ti.', bookBtn: 'Reservar mi sesión', items: [
       { name: 'Masaje Relajante', desc: 'Presión de ligera a media para relajación pura.', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}] },
@@ -338,6 +340,22 @@ function App() {
               <p className="benefit-desc">{benefit.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Service Areas */}
+      <section className="areas-section fade-in">
+        <div className="container">
+          <h2 className="section-title areas-title">{t.areas.title}</h2>
+          <p className="section-subtitle areas-subtitle">{t.areas.subtitle}</p>
+          <div className="areas-grid">
+            {t.areas.list.map((area, i) => (
+              <div key={i} className="area-pill fade-in">
+                <MapPin size={16} className="area-icon" />
+                <span>{area}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
