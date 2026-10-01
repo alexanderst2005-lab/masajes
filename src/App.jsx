@@ -9,7 +9,7 @@ const WHATSAPP_NUMBER = '590690221868'; // e.g. '1234567890' (Include country co
 const content = {
   en: {
     nav: { home: 'Home', services: 'Services', about: 'About', benefits: 'Benefits', contact: 'Contact', book: 'Book a Massage' },
-    hero: { tag: 'Massage Therapist - Mobile Massages', title: 'Sxm Mobile Massage', desc: 'Professional massage therapy designed to help you relax, release tension, and feel your best by Leidy Solomons.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
+    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Professional massage therapy designed to help you relax, release tension, and feel your best by Leidy Solomons.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
       { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 min', price: '$80', img: '/service1.jpg' },
       { id: 2, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 min', price: '$95', img: '/service2.jpg' },
@@ -40,7 +40,7 @@ const content = {
     booking: { title: 'Ready to Relax?', subtitle: 'Give yourself the time you deserve. Book your massage session today.', btn: 'Book an Appointment' },
     location: { title: 'Find Us', address: 'Mobile Massages in Sxm', phone: '+590690221868', email: 'hello@artofrelaxationsxm.com' },
     finalCta: { t1: 'Your body deserves a little care.', t2: 'Take a moment for yourself.', btn: 'Book Your Massage' },
-    footer: { rights: '© 2026 Sxm Mobile Massage. All rights reserved.' },
+    footer: { rights: '© 2026 The Art of Relaxation Sxm. All rights reserved.' },
     modal: {
       title: 'Book Your Session',
       service: 'Select Service',
@@ -57,7 +57,7 @@ const content = {
   },
   es: {
     nav: { home: 'Inicio', services: 'Servicios', about: 'Sobre mí', benefits: 'Beneficios', contact: 'Contacto', book: 'Reservar un masaje' },
-    hero: { tag: 'Terapeuta de Masajes - Masajes a Domicilio', title: 'Sxm Mobile Massage', desc: 'Terapia de masajes profesional diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor por Leidy Solomons.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
+    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Terapia de masajes profesional diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor por Leidy Solomons.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
       { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 min', price: '$80', img: '/service1.jpg' },
       { id: 2, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 min', price: '$95', img: '/service2.jpg' },
@@ -88,7 +88,7 @@ const content = {
     booking: { title: '¿Lista para relajarte?', subtitle: 'Date el tiempo que mereces. Reserva tu sesión de masaje hoy mismo.', btn: 'Agendar una cita' },
     location: { title: 'Encuéntranos', address: 'Masajes a Domicilio en Sxm', phone: '+590690221868', email: 'hello@artofrelaxationsxm.com' },
     finalCta: { t1: 'Tu cuerpo merece un poco de cuidado.', t2: 'Regálate un momento para ti.', btn: 'Reservar mi masaje' },
-    footer: { rights: '© 2026 Sxm Mobile Massage. Todos los derechos reservados.' },
+    footer: { rights: '© 2026 The Art of Relaxation Sxm. Todos los derechos reservados.' },
     modal: {
       title: 'Reserva tu sesión',
       service: 'Selecciona el Servicio',
@@ -211,8 +211,8 @@ function App() {
       <header>
         <div className="container header-container">
           <div className="logo logo-container">
-            <img src="/logo.png" alt="Sxm Mobile Massage Logo" className="logo-img" />
-            <span className="logo-text">Sxm Mobile Massage</span>
+            <img src="/logo.png" alt="The Art of Relaxation Logo" className="logo-img" />
+            <span className="logo-text">The Art of Relaxation Sxm</span>
           </div>
           <nav className="nav-links">
             <a href="#home" className="nav-link">{t.nav.home}</a>
@@ -440,8 +440,8 @@ function App() {
           <div className="footer-content">
             <div className="footer-col">
               <div className="logo" style={{color: 'white', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px'}}>
-                <img src="/logo.png" alt="Sxm Mobile Massage Logo" style={{height: '40px', width: '40px', objectFit: 'cover', borderRadius: '50%', filter: 'brightness(0) invert(1)'}} />
-                <span>Sxm Mobile Massage</span>
+                <img src="/logo.png" alt="The Art of Relaxation Logo" style={{height: '40px', width: '40px', objectFit: 'cover', borderRadius: '50%'}} />
+                <span>The Art of Relaxation Sxm</span>
               </div>
               <p style={{color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem'}}>Massage Therapist - Mobile Massages</p>
             </div>
