@@ -520,50 +520,57 @@ section {
 
 /* Service Areas */
 .areas-section {
-  background-color: #2F3A2B;
-  color: #F9F6F0;
+  background-color: #F5F7F4; /* Light subtle background to separate from other sections */
   padding: 6rem 0;
 }
 
 .areas-section .areas-title {
-  color: #F9F6F0;
+  color: var(--color-primary-dark);
 }
 
 .areas-section .areas-subtitle {
-  color: rgba(249, 246, 240, 0.8);
+  color: var(--color-text-light);
 }
 
 .areas-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  justify-content: center;
-  max-width: 800px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  max-width: 1000px;
+  margin: 3rem auto 0 auto;
 }
 
 .area-pill {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid rgba(249, 246, 240, 0.2);
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--color-border);
   border-radius: 50px;
-  background-color: rgba(255, 255, 255, 0.05);
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  background-color: var(--color-card-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
   transition: all 0.3s ease;
 }
 
 .area-pill:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(249, 246, 240, 0.4);
-  transform: translateY(-2px);
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(140, 153, 133, 0.2);
+}
+
+.area-pill:hover .area-icon {
+  color: white;
 }
 
 .area-icon {
-  opacity: 0.8;
+  color: var(--color-accent);
+  transition: color 0.3s ease;
 }
 
 /* Gallery */
