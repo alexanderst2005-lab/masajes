@@ -380,9 +380,10 @@ function App() {
       </section>
 
       {/* Testimonials */}
-      <section className="container fade-in">
+      <section className="testimonials-section fade-in">
         <h2 className="section-title">{t.testimonials.title}</h2>
-        <div className="testimonials-grid" style={{marginTop: '4rem'}}>
+        {/* Desktop grid */}
+        <div className="testimonials-grid">
           {t.testimonials.list.map((testimonial, i) => (
             <div key={i} className="testimonial-card fade-in">
               <MessageCircle className="quote-icon" size={40} />
@@ -390,6 +391,18 @@ function App() {
               <h4 className="testimonial-author">— {testimonial.author}</h4>
             </div>
           ))}
+        </div>
+        {/* Mobile carousel */}
+        <div className="testimonials-carousel-wrapper">
+          <div className="testimonials-carousel-track">
+            {[...t.testimonials.list, ...t.testimonials.list].map((testimonial, i) => (
+              <div key={i} className="testimonial-card-slide">
+                <MessageCircle className="quote-icon" size={28} />
+                <p className="testimonial-text">"{testimonial.text}"</p>
+                <h4 className="testimonial-author">— {testimonial.author}</h4>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
