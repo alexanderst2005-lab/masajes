@@ -1040,7 +1040,21 @@ footer {
     justify-content: center;
   }
   .areas-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+  .area-pill {
+    padding: 0.5rem 0.2rem;
+    font-size: 0.65rem;
+    gap: 0.25rem;
+    border-radius: 8px; /* Slightly less rounded on small screens to save space */
+    line-height: 1.1;
+    flex-direction: column; /* Stack icon and text for better fit */
+    text-align: center;
+  }
+  .area-icon {
+    width: 14px;
+    height: 14px;
   }
   .hero-title {
     font-size: 2rem;
