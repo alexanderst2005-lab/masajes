@@ -555,20 +555,32 @@ section {
   color: var(--color-text-light);
 }
 
-.menu-item-price {
+.menu-item-prices {
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.menu-item-price .time {
+.menu-price-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.menu-price-row .time {
   font-size: 0.85rem;
   color: var(--color-text-light);
-  display: block;
+  white-space: nowrap;
 }
 
-.menu-item-price .price {
-  font-size: 1.2rem;
+.menu-price-row .price {
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--color-accent);
+  min-width: 70px;
+  text-align: right;
 }
 
 .menu-action {
@@ -586,9 +598,7 @@ section {
   margin-bottom: 4rem;
 }
 .testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  display: none;
 }
 
 .testimonial-card {
@@ -618,9 +628,12 @@ section {
   color: var(--color-primary-dark);
 }
 
-/* Testimonials Carousel (Mobile only) */
+/* Testimonials Carousel */
 .testimonials-carousel-wrapper {
-  display: none;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
 }
 
 .testimonials-carousel-track {
@@ -638,8 +651,8 @@ section {
   background: var(--color-card-bg);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 1.5rem;
-  width: 260px;
+  padding: 2rem 2.5rem;
+  width: 380px;
   flex-shrink: 0;
   text-align: center;
   box-shadow: 0 4px 15px rgba(0,0,0,0.04);
@@ -966,15 +979,10 @@ footer {
     font-size: 2.5rem;
   }
 
-  /* Testimonials: hide grid, show carousel */
-  .testimonials-grid {
-    display: none;
-  }
-  .testimonials-carousel-wrapper {
-    display: block;
-    overflow: hidden;
-    width: 100%;
-    padding: 0;
+  /* Testimonials carousel card smaller on mobile */
+  .testimonial-card-slide {
+    width: 260px;
+    padding: 1.5rem;
   }
 }
 
