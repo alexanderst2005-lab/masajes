@@ -176,6 +176,17 @@ header {
   letter-spacing: 0.5px;
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  height: 40px;
+  object-fit: contain;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -832,6 +843,18 @@ footer {
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem;
+  }
+  
+  .logo-img {
+    height: 30px;
+  }
+  
+  .logo-container {
+    gap: 6px;
   }
   
   .mobile-lang {

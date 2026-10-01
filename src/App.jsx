@@ -210,9 +210,9 @@ function App() {
       {/* Header */}
       <header>
         <div className="container header-container">
-          <div className="logo" style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-            <img src="/logo.png" alt="The Art of Relaxation Logo" style={{height: '40px', objectFit: 'contain'}} />
-            <span>The Art of Relaxation Sxm</span>
+          <div className="logo logo-container">
+            <img src="/logo.png" alt="The Art of Relaxation Logo" className="logo-img" />
+            <span className="logo-text">The Art of Relaxation Sxm</span>
           </div>
           <nav className="nav-links">
             <a href="#home" className="nav-link">{t.nav.home}</a>
