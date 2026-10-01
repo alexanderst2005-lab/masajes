@@ -848,7 +848,10 @@ footer {
   }
   
   .logo-text {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    max-width: 150px;
+    white-space: pre-wrap;
   }
   
   .logo-img {
