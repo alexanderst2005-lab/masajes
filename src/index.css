@@ -184,7 +184,9 @@ header {
 
 .logo-img {
   height: 40px;
-  object-fit: contain;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .nav-links {
@@ -299,14 +301,14 @@ header {
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 3rem;
   line-height: 1.1;
   margin-bottom: 1.5rem;
   color: var(--color-primary-dark);
 }
 
 .hero-desc {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--color-text-light);
   margin-bottom: 2.5rem;
   max-width: 90%;
@@ -332,7 +334,7 @@ section {
 
 .section-title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
   color: var(--color-primary-dark);
 }
@@ -798,7 +800,7 @@ footer {
 /* Responsive Design */
 @media (max-width: 992px) {
   .hero-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   .about-grid {
     grid-template-columns: 1fr;
