@@ -18,7 +18,7 @@ const content = {
       { id: 5, name: 'Prenatal Massage', desc: 'Gentle, soothing techniques designed specifically for expecting mothers.', time: '60 / 90 Minutes', price: 'From $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/service5.jpg' },
       { id: 6, name: 'Yacht Massage', desc: 'A luxurious massage experience aboard your yacht. Pure relaxation on the water.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/service1.jpg' }
     ]},
-    about: { title: 'Meet Leidy Solomons', p1: 'With over 5 years of experience and a passion for wellness, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", btn: 'Learn More' },
+    about: { title: 'Meet Leidy Solomons', p1: 'With over 5 years of experience and a passion for wellness, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", p3: "Professional mobile massage services in Sint Maarten and Saint Martin. Relaxing massages at hotels, villas, yachts and Airbnbs. Available island-wide.", btn: 'Learn More' },
     benefits: { title: 'Why Choose Us?', list: [
       { title: 'PERSONALIZED CARE', desc: 'Every session is tailored to your needs.', icon: 'Heart' },
       { title: 'RELAXING ENVIRONMENT', desc: 'A peaceful space designed for your comfort.', icon: 'Leaf' },
@@ -69,7 +69,7 @@ const content = {
       { id: 5, name: 'Masaje Prenatal', desc: 'Técnicas suaves diseñadas especialmente para futuras madres.', time: '60 / 90 Minutes', price: 'Desde $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/service5.jpg' },
       { id: 6, name: 'Masaje en Yate', desc: 'Una experiencia de masaje de lujo a bordo de tu yate. Relajación pura en el agua.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/service1.jpg' }
     ]},
-    about: { title: 'Conoce a Leidy Solomons', p1: 'Con más de 5 años de experiencia y una pasión por el bienestar, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', btn: 'Saber más' },
+    about: { title: 'Conoce a Leidy Solomons', p1: 'Con más de 5 años de experiencia y una pasión por el bienestar, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', p3: 'Servicios de masajes profesionales a domicilio en Sint Maarten y Saint Martin. Masajes relajantes en hoteles, villas, yates y Airbnbs. Disponibles en toda la isla.', btn: 'Saber más' },
     benefits: { title: '¿Por qué elegirnos?', list: [
       { title: 'ATENCIÓN PERSONALIZADA', desc: 'Cada sesión se adapta a tus necesidades.', icon: 'Heart' },
       { title: 'AMBIENTE RELAJANTE', desc: 'Un espacio tranquilo pensado para tu comodidad.', icon: 'Leaf' },
@@ -217,8 +217,7 @@ function App() {
       <header>
         <div className="container header-container">
           <div className="logo logo-container">
-            <img src="/logo.png" alt="The Art of Relaxation Logo" className="logo-img" />
-            <span className="logo-text">The Art of Relaxation Sxm</span>
+            <img src="/logo.jpg" alt="The Art of Relaxation Logo" className="logo-img" style={{height: '60px'}} />
           </div>
           <nav className="nav-links">
             <a href="#home" className="nav-link">{t.nav.home}</a>
@@ -322,6 +321,7 @@ function App() {
             <h2 className="about-title">{t.about.title}</h2>
             <p className="about-text">{t.about.p1}</p>
             <p className="about-text">{t.about.p2}</p>
+            <p className="about-text" style={{fontWeight: 500, color: 'var(--color-text)'}}>{t.about.p3}</p>
             <a href="#services" className="btn btn-outline" style={{marginTop: '1rem'}}>{t.about.btn}</a>
           </div>
         </div>
