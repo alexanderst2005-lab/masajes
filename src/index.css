@@ -971,15 +971,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-  header {
-    position: absolute;
-  }
-
-  .btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-  }
-
   .nav-links, .header-cta, .desktop-lang {
     display: none;
   }
@@ -1045,20 +1036,8 @@ footer {
 
 
   .hero {
-    padding-top: 110px;
-    padding-bottom: 30px;
-    min-height: unset;
+    padding-top: 120px;
     justify-content: center;
-  }
-  .hero-buttons {
-    flex-direction: column;
-    gap: 0.6rem;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto 1rem auto;
-  }
-  .hero-buttons .btn {
-    width: 100%;
   }
   .areas-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1078,16 +1057,16 @@ footer {
     height: 14px;
   }
   .hero-title {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    margin-bottom: 1rem;
   }
   .hero-desc {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
   }
   .hero-tag {
     font-size: 0.75rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
   .section-title {
     font-size: 1.75rem;
