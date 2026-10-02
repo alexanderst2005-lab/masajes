@@ -522,9 +522,6 @@ function App() {
                   {t.services.list.map(s => (
                     <option key={s.id} value={s.name}>{s.name}</option>
                   ))}
-                  {t.menu.items.map((m, i) => (
-                    <option key={`m-${i}`} value={m.name}>{m.name}</option>
-                  ))}
                 </select>
               </div>
 
