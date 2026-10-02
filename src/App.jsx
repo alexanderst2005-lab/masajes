@@ -315,7 +315,7 @@ function App() {
       <section id="about" className="about-section fade-in">
         <div className="container about-grid">
           <div className="about-img-wrapper fade-in">
-            <img src="/about.jpg" alt="Massage Therapist" className="about-img" />
+            <img src="/about.png" alt="Massage Therapist" className="about-img" />
           </div>
           <div className="about-content fade-in">
             <h2 className="about-title">{t.about.title}</h2>
