@@ -484,7 +484,7 @@ function App() {
           <div className="footer-content">
             <div className="footer-col">
               <div className="logo" style={{color: 'white', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px'}}>
-                <img src="/logo.jpg" alt="The Art of Relaxation Logo" style={{height: '40px', width: 'auto', objectFit: 'contain'}} />
+                <img src="/logo.jpg" alt="The Art of Relaxation Logo" style={{height: '40px', width: '40px', objectFit: 'cover', borderRadius: '50%'}} />
                 <span>The Art of Relaxation Sxm</span>
               </div>
               <p style={{color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem'}}>Massage Therapist - Mobile Massages</p>
