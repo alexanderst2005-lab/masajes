@@ -971,6 +971,15 @@ footer {
 }
 
 @media (max-width: 768px) {
+  header {
+    position: absolute;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
   .nav-links, .header-cta, .desktop-lang {
     display: none;
   }
@@ -1036,8 +1045,20 @@ footer {
 
 
   .hero {
-    padding-top: 120px;
+    padding-top: 140px;
+    padding-bottom: 60px;
+    min-height: auto;
     justify-content: center;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 2rem auto;
+  }
+  .hero-buttons .btn {
+    width: 100%;
   }
   .areas-grid {
     grid-template-columns: repeat(3, 1fr);
