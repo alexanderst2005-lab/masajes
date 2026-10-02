@@ -15,7 +15,7 @@ const content = {
       { id: 2, name: 'Couple Massage', desc: 'A shared relaxation experience for two, side by side.', time: '60 / 90 Minutes', price: 'From $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.png' },
       { id: 3, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 / 90 Minutes', price: 'From $135 USD', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}], img: '/deeptissue.jpg' },
       { id: 4, name: 'Group Massages', desc: 'For groups of three or more people, a 5% discount per person applies; massages start at $85.00.', time: 'Flexible', price: 'From $85 USD', options: [{time: 'Per person', price: 'From $85 USD'}], img: '/group.jpg' },
-      { id: 5, name: 'Prenatal Massage', desc: 'Gentle, soothing techniques designed specifically for expecting mothers.', time: '60 / 90 Minutes', price: 'From $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/prenatal.jpg' },
+      { id: 5, name: 'Pregnant Women', desc: 'Gentle, soothing techniques designed specifically for expecting mothers.', time: '60 / 90 Minutes', price: 'From $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/prenatal.jpg' },
       { id: 6, name: 'Yacht Massage', desc: 'A luxurious massage experience aboard your yacht. Pure relaxation on the water.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/yacht.png' }
     ]},
     about: { title: 'Meet Leidy Solomons', p1: 'With over 5 years of experience and a passion for wellness, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", p3: "Professional mobile massage services in Sint Maarten and Saint Martin. Relaxing massages at hotels, villas, yachts and Airbnbs. Available island-wide.", btn: 'Learn More' },
@@ -32,7 +32,7 @@ const content = {
       { name: 'Couple Massage', desc: 'Shared relaxation for two.', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}] },
       { name: 'Deep Tissue Massage', desc: 'Firm pressure to target deep muscle layers.', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}] },
       { name: 'Group Massages', desc: 'For groups of 3+ people, a 5% discount per person applies; massages start at $85.00.', options: [{time: 'Per person', price: 'From $85 USD'}] },
-      { name: 'Prenatal Massage', desc: 'Safe and comforting for expecting mothers.', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}] },
+      { name: 'Pregnant Women', desc: 'Safe and comforting for expecting mothers.', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}] },
       { name: 'Yacht Massage', desc: 'Luxury massage on the water.', options: [{time: '60 Minutes', price: '$100 USD'}] }
     ]},
     testimonials: { title: 'What Our Clients Say', list: [
@@ -66,7 +66,7 @@ const content = {
       { id: 2, name: 'Masaje en Pareja', desc: 'Una experiencia de relajación compartida para dos, lado a lado.', time: '60 / 90 Minutes', price: 'Desde $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.png' },
       { id: 3, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 / 90 Minutes', price: 'Desde $135 USD', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}], img: '/deeptissue.jpg' },
       { id: 4, name: 'Masajes Grupales', desc: 'Para grupos de tres o más personas, se aplica un 5% de descuento por persona; los masajes comienzan en $85.00.', time: 'Flexible', price: 'Desde $85 USD', options: [{time: 'Por persona', price: 'Desde $85 USD'}], img: '/group.jpg' },
-      { id: 5, name: 'Masaje Prenatal', desc: 'Técnicas suaves diseñadas especialmente para futuras madres.', time: '60 / 90 Minutes', price: 'Desde $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/prenatal.jpg' },
+      { id: 5, name: 'Pregnant Women', desc: 'Técnicas suaves diseñadas especialmente para futuras madres.', time: '60 / 90 Minutes', price: 'Desde $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/prenatal.jpg' },
       { id: 6, name: 'Masaje en Yate', desc: 'Una experiencia de masaje de lujo a bordo de tu yate. Relajación pura en el agua.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/yacht.png' }
     ]},
     about: { title: 'Conoce a Leidy Solomons', p1: 'Con más de 5 años de experiencia y una pasión por el bienestar, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', p3: 'Servicios de masajes profesionales a domicilio en Sint Maarten y Saint Martin. Masajes relajantes en hoteles, villas, yates y Airbnbs. Disponibles en toda la isla.', btn: 'Saber más' },
@@ -83,7 +83,7 @@ const content = {
       { name: 'Masaje en Pareja', desc: 'Relajación compartida para dos.', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}] },
       { name: 'Masaje de Tejido Profundo', desc: 'Presión firme para llegar a capas musculares profundas.', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}] },
       { name: 'Masajes Grupales', desc: 'Para grupos de 3+ personas, se aplica un 5% de descuento por persona; los masajes comienzan en $85.00.', options: [{time: 'Por persona', price: 'Desde $85 USD'}] },
-      { name: 'Masaje Prenatal', desc: 'Seguro y reconfortante para futuras madres.', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}] },
+      { name: 'Pregnant Women', desc: 'Seguro y reconfortante para futuras madres.', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}] },
       { name: 'Masaje en Yate', desc: 'Masaje de lujo en el agua.', options: [{time: '60 Minutes', price: '$100 USD'}] }
     ]},
     testimonials: { title: 'Lo que dicen nuestros clientes', list: [
