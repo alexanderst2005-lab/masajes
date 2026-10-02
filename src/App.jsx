@@ -12,11 +12,11 @@ const content = {
     hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'With over 5 years of professional experience, Leidy Solomons offers mobile massage therapy designed to help you relax, release tension, and feel your best.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
       { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 / 90 Minutes', price: 'From $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
-      { id: 2, name: 'Couple Massage', desc: 'A shared relaxation experience for two, side by side.', time: '60 / 90 Minutes', price: 'From $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.jpg' },
+      { id: 2, name: 'Couple Massage', desc: 'A shared relaxation experience for two, side by side.', time: '60 / 90 Minutes', price: 'From $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.png' },
       { id: 3, name: 'Deep Tissue Massage', desc: 'Focused pressure to help release muscle tension and tightness.', time: '60 / 90 Minutes', price: 'From $135 USD', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}], img: '/deeptissue.jpg' },
-      { id: 4, name: 'Group Massages', desc: 'For groups of three or more people, a 5% discount per person applies; massages start at $85.00.', time: 'Flexible', price: 'From $85 USD', options: [{time: 'Per person', price: 'From $85 USD'}], img: '/service4.jpg' },
+      { id: 4, name: 'Group Massages', desc: 'For groups of three or more people, a 5% discount per person applies; massages start at $85.00.', time: 'Flexible', price: 'From $85 USD', options: [{time: 'Per person', price: 'From $85 USD'}], img: '/group.jpg' },
       { id: 5, name: 'Prenatal Massage', desc: 'Gentle, soothing techniques designed specifically for expecting mothers.', time: '60 / 90 Minutes', price: 'From $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/prenatal.jpg' },
-      { id: 6, name: 'Yacht Massage', desc: 'A luxurious massage experience aboard your yacht. Pure relaxation on the water.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/yacht.jpg' }
+      { id: 6, name: 'Yacht Massage', desc: 'A luxurious massage experience aboard your yacht. Pure relaxation on the water.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/yacht.png' }
     ]},
     about: { title: 'Meet Leidy Solomons', p1: 'With over 5 years of experience and a passion for wellness, I provide personalized massage experiences in a calm, comfortable, and welcoming environment.', p2: "Every session is tailored to your individual needs, whether you're looking to relax, relieve muscle tension, or simply take time for yourself.", p3: "Professional mobile massage services in Sint Maarten and Saint Martin. Relaxing massages at hotels, villas, yachts and Airbnbs. Available island-wide.", btn: 'Learn More' },
     benefits: { title: 'Why Choose Us?', list: [
@@ -63,11 +63,11 @@ const content = {
     hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Con más de 5 años de experiencia profesional, Leidy Solomons ofrece terapia de masajes a domicilio diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
       { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 / 90 Minutes', price: 'Desde $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
-      { id: 2, name: 'Masaje en Pareja', desc: 'Una experiencia de relajación compartida para dos, lado a lado.', time: '60 / 90 Minutes', price: 'Desde $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.jpg' },
+      { id: 2, name: 'Masaje en Pareja', desc: 'Una experiencia de relajación compartida para dos, lado a lado.', time: '60 / 90 Minutes', price: 'Desde $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.png' },
       { id: 3, name: 'Masaje de Tejido Profundo', desc: 'Presión enfocada para ayudar a liberar la tensión muscular.', time: '60 / 90 Minutes', price: 'Desde $135 USD', options: [{time: '60 Minutes', price: '$135 USD'}, {time: '90 Minutes', price: '$155 USD'}], img: '/deeptissue.jpg' },
-      { id: 4, name: 'Masajes Grupales', desc: 'Para grupos de tres o más personas, se aplica un 5% de descuento por persona; los masajes comienzan en $85.00.', time: 'Flexible', price: 'Desde $85 USD', options: [{time: 'Por persona', price: 'Desde $85 USD'}], img: '/service4.jpg' },
+      { id: 4, name: 'Masajes Grupales', desc: 'Para grupos de tres o más personas, se aplica un 5% de descuento por persona; los masajes comienzan en $85.00.', time: 'Flexible', price: 'Desde $85 USD', options: [{time: 'Por persona', price: 'Desde $85 USD'}], img: '/group.jpg' },
       { id: 5, name: 'Masaje Prenatal', desc: 'Técnicas suaves diseñadas especialmente para futuras madres.', time: '60 / 90 Minutes', price: 'Desde $100 USD', options: [{time: '60 Minutes', price: '$100 USD'}, {time: '90 Minutes', price: '$125 USD'}], img: '/prenatal.jpg' },
-      { id: 6, name: 'Masaje en Yate', desc: 'Una experiencia de masaje de lujo a bordo de tu yate. Relajación pura en el agua.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/yacht.jpg' }
+      { id: 6, name: 'Masaje en Yate', desc: 'Una experiencia de masaje de lujo a bordo de tu yate. Relajación pura en el agua.', time: '60 Minutes', price: '$100 USD', options: [{time: '60 Minutes', price: '$100 USD'}], img: '/yacht.png' }
     ]},
     about: { title: 'Conoce a Leidy Solomons', p1: 'Con más de 5 años de experiencia y una pasión por el bienestar, ofrezco experiencias de masaje personalizadas en un ambiente tranquilo, cómodo y acogedor.', p2: 'Cada sesión se adapta a tus necesidades, ya sea que busques relajarte, aliviar la tensión muscular o simplemente dedicarte un momento para ti.', p3: 'Servicios de masajes profesionales a domicilio en Sint Maarten y Saint Martin. Masajes relajantes en hoteles, villas, yates y Airbnbs. Disponibles en toda la isla.', btn: 'Saber más' },
     benefits: { title: '¿Por qué elegirnos?', list: [
@@ -375,7 +375,7 @@ function App() {
             <img src="/prenatal.jpg" alt="Oils" />
           </div>
           <div className="gallery-item gallery-item-4">
-            <img src="/couple.jpg" alt="Stones" />
+            <img src="/couple.png" alt="Stones" />
           </div>
         </div>
       </section>
