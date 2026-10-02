@@ -1081,6 +1081,8 @@ footer {
   .hero-desc {
     font-size: 0.95rem;
     margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
   }
   .hero-tag {
     font-size: 0.75rem;
