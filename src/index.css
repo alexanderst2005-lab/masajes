@@ -971,6 +971,11 @@ footer {
 }
 
 @media (max-width: 768px) {
+  header {
+    position: absolute;
+    padding: 0.4rem 0;
+  }
+
   .nav-links, .header-cta, .desktop-lang {
     display: none;
   }
@@ -1036,8 +1041,20 @@ footer {
 
 
   .hero {
-    padding-top: 120px;
+    padding-top: 100px;
     justify-content: center;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 2rem auto;
+  }
+  .hero-buttons .btn {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
   }
   .areas-grid {
     grid-template-columns: repeat(3, 1fr);
