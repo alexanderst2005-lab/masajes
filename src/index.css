@@ -311,6 +311,7 @@ header {
   color: var(--color-text-light);
   margin-bottom: 2.5rem;
   max-width: 90%;
+  white-space: pre-line;
 }
 
 .hero-buttons {

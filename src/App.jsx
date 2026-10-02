@@ -9,7 +9,7 @@ const WHATSAPP_NUMBER = '17215236759'; // e.g. '1234567890' (Include country cod
 const content = {
   en: {
     nav: { home: 'Home', services: 'Services', about: 'About', benefits: 'Benefits', contact: 'Contact', book: 'Book a Massage' },
-    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'With over 5 years of professional experience, we offer mobile massage therapy designed to help you relax, release tension, and feel your best.', bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
+    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: "With over 5 years of professional experience, we offer mobile massage therapy designed to help you relax, release tension, and feel your best.\n\nServing Sint Maarten & Saint Martin\nMobile massage services available across both sides of the island.", bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
       { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 / 90 Minutes', price: 'From $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
       { id: 2, name: 'Couple Massage', desc: 'A shared relaxation experience for two, side by side.', time: '60 / 90 Minutes', price: 'From $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.png' },
@@ -41,7 +41,7 @@ const content = {
       { text: "Professional, relaxing, and exactly what I needed.", author: "Amanda T." }
     ]},
     booking: { title: 'Ready to Relax?', subtitle: 'Give yourself the time you deserve. Book your massage session today.', btn: 'Book an Appointment' },
-    location: { title: 'Find Us', address: 'Philipsburg', phone: '+1(721)5236759', email: 'ytt.292013@outlook.com' },
+    location: { title: 'Find Us', address: 'Sint Maarten', phone: '+1(721)5236759', email: 'ytt.292013@outlook.com' },
     finalCta: { t1: 'Your body deserves a little care.', t2: 'Take a moment for yourself.', btn: 'Book Your Massage' },
     footer: { rights: '© 2026 The Art of Relaxation Sxm. All rights reserved.' },
     modal: {
@@ -60,7 +60,7 @@ const content = {
   },
   es: {
     nav: { home: 'Inicio', services: 'Servicios', about: 'Sobre mí', benefits: 'Beneficios', contact: 'Contacto', book: 'Reservar un masaje' },
-    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: 'Con más de 5 años de experiencia profesional, ofrecemos terapia de masajes a domicilio diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor.', bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
+    hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: "Con más de 5 años de experiencia profesional, ofrecemos terapia de masajes a domicilio diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor.\n\nSirviendo a Sint Maarten y Saint Martin\nServicios de masajes a domicilio disponibles en ambos lados de la isla.", bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
       { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 / 90 Minutes', price: 'Desde $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
       { id: 2, name: 'Masaje en Pareja', desc: 'Una experiencia de relajación compartida para dos, lado a lado.', time: '60 / 90 Minutes', price: 'Desde $180 USD', options: [{time: '60 Minutes', price: '$180 USD'}, {time: '90 Minutes', price: '$260 USD'}], img: '/couple.png' },
@@ -92,7 +92,7 @@ const content = {
       { text: "Profesional, relajante y exactamente lo que necesitaba.", author: "Amanda T." }
     ]},
     booking: { title: '¿Lista para relajarte?', subtitle: 'Date el tiempo que mereces. Reserva tu sesión de masaje hoy mismo.', btn: 'Agendar una cita' },
-    location: { title: 'Encuéntranos', address: 'Philipsburg', phone: '+1(721)5236759', email: 'ytt.292013@outlook.com' },
+    location: { title: 'Encuéntranos', address: 'Sint Maarten', phone: '+1(721)5236759', email: 'ytt.292013@outlook.com' },
     finalCta: { t1: 'Tu cuerpo merece un poco de cuidado.', t2: 'Regálate un momento para ti.', btn: 'Reservar mi masaje' },
     footer: { rights: '© 2026 The Art of Relaxation Sxm. Todos los derechos reservados.' },
     modal: {
