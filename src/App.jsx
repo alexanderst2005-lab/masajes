@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, Calendar, Menu, Clock, Leaf, Heart, Sparkles, X, M
 import './index.css';
 
 // WhatsApp Business Number (Editable)
-const WHATSAPP_NUMBER = '17215236759'; // e.g. '1234567890' (Include country code, no +, no spaces)
+const WHATSAPP_NUMBER = '590690221868'; // e.g. '1234567890' (Include country code, no +, no spaces)
 
 // Content structure to allow easy editing and bilingual support
 const content = {
@@ -41,7 +41,7 @@ const content = {
       { text: "Professional, relaxing, and exactly what I needed.", author: "Amanda T." }
     ]},
     booking: { title: 'Ready to Relax?', subtitle: 'Give yourself the time you deserve. Book your massage session today.', btn: 'Book an Appointment' },
-    location: { title: 'Find Us', address: 'Sint Maarten', phone: '+1(721)5236759', email: 'ytt.292013@outlook.com' },
+    location: { title: 'Find Us', address: 'Sint Maarten', phone: '+590 690 22-1868', email: 'theartofrelaxation.sxm@gmail.com' },
     finalCta: { t1: 'Your body deserves a little care.', t2: 'Take a moment for yourself.', btn: 'Book Your Massage' },
     footer: { rights: '© 2026 The Art of Relaxation Sxm. All rights reserved.' },
     modal: {
@@ -92,7 +92,7 @@ const content = {
       { text: "Profesional, relajante y exactamente lo que necesitaba.", author: "Amanda T." }
     ]},
     booking: { title: '¿Lista para relajarte?', subtitle: 'Date el tiempo que mereces. Reserva tu sesión de masaje hoy mismo.', btn: 'Agendar una cita' },
-    location: { title: 'Encuéntranos', address: 'Sint Maarten', phone: '+1(721)5236759', email: 'ytt.292013@outlook.com' },
+    location: { title: 'Encuéntranos', address: 'Sint Maarten', phone: '+590 690 22-1868', email: 'theartofrelaxation.sxm@gmail.com' },
     finalCta: { t1: 'Tu cuerpo merece un poco de cuidado.', t2: 'Regálate un momento para ti.', btn: 'Reservar mi masaje' },
     footer: { rights: '© 2026 The Art of Relaxation Sxm. Todos los derechos reservados.' },
     modal: {
