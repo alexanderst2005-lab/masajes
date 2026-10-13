@@ -51,6 +51,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const [editingItem, setEditingItem] = useState(null);
   const [galleryMediaType, setGalleryMediaType] = useState('image');
   const [galleryUrl, setGalleryUrl] = useState('');
+  const [galleryFile, setGalleryFile] = useState(null);
   const [galleryTitle, setGalleryTitle] = useState('');
   const [galleryDesc, setGalleryDesc] = useState('');
   const [filePreview, setFilePreview] = useState('');
@@ -62,6 +63,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const [serviceName, setServiceName] = useState('');
   const [serviceDesc, setServiceDesc] = useState('');
   const [serviceImageUrl, setServiceImageUrl] = useState('');
+  const [serviceFile, setServiceFile] = useState(null);
   const [serviceFilePreview, setServiceFilePreview] = useState('');
   const [serviceUploadingFile, setServiceUploadingFile] = useState(false);
   const [serviceOptions, setServiceOptions] = useState([
@@ -232,20 +234,16 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Detect media type from file
+    setGalleryFile(file);
     if (file.type.startsWith('video/')) {
       setGalleryMediaType('video');
     } else {
       setGalleryMediaType('image');
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target.result;
-      setFilePreview(result);
-      setGalleryUrl(result); // Default to data URL or upload
-    };
-    reader.readAsDataURL(file);
+    const preview = URL.createObjectURL(file);
+    setFilePreview(preview);
+    setGalleryUrl('');
   };
 
   const handleOpenGalleryModal = (itemToEdit = null) => {
@@ -253,6 +251,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       setEditingItem(itemToEdit);
       setGalleryMediaType(itemToEdit.media_type || 'image');
       setGalleryUrl(itemToEdit.url || '');
+      setGalleryFile(null);
       setGalleryTitle(itemToEdit.title || '');
       setGalleryDesc(itemToEdit.description || '');
       setFilePreview(itemToEdit.url || '');
@@ -260,6 +259,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       setEditingItem(null);
       setGalleryMediaType('image');
       setGalleryUrl('');
+      setGalleryFile(null);
       setGalleryTitle('');
       setGalleryDesc('');
       setFilePreview('');
@@ -269,8 +269,8 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
 
   const handleSaveGalleryItem = async (e) => {
     e.preventDefault();
-    if (!galleryUrl.trim()) {
-      showNotification('error', 'Por favor selecciona un archivo o ingresa una URL.');
+    if (!galleryFile && !galleryUrl.trim()) {
+      showNotification('error', 'Por favor selecciona un video/foto o ingresa un enlace.');
       return;
     }
 
@@ -278,27 +278,33 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
     try {
       let finalUrl = galleryUrl;
 
-      // If it's a new base64 upload, attempt persistent upload endpoint
-      if (galleryUrl.startsWith('data:')) {
-        try {
-          const upRes = await fetch('/api/upload', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              file: galleryUrl,
-              mediaType: galleryMediaType
-            })
-          });
-          if (upRes.ok) {
-            const upData = await upRes.json();
-            if (upData.url) finalUrl = upData.url;
-          }
-        } catch {
-          // Fall back to data URI if upload service isn't setup
+      // Subida directa desde el navegador a Cloudinary (sin límite de 4.5MB de Vercel)
+      if (galleryFile) {
+        // 1. Obtener firma autorizada de la API
+        const sigRes = await fetch(`/api/upload?type=${galleryMediaType}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const sig = await sigRes.json();
+        if (!sigRes.ok) throw new Error(sig.error || 'Error autorizando subida a Cloudinary');
+
+        // 2. Subir directamente el archivo a Cloudinary
+        const formData = new FormData();
+        formData.append('file', galleryFile);
+        formData.append('timestamp', sig.timestamp);
+        formData.append('api_key', sig.apiKey);
+        formData.append('signature', sig.signature);
+        formData.append('folder', sig.folder);
+
+        const cRes = await fetch(sig.uploadUrl, {
+          method: 'POST',
+          body: formData
+        });
+
+        const cData = await cRes.json();
+        if (!cRes.ok || !cData.secure_url) {
+          throw new Error(cData.error?.message || 'Error al subir el video a Cloudinary');
         }
+        finalUrl = cData.secure_url;
       }
 
       const payload = {
@@ -337,7 +343,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
         showNotification('success', 'Publicación actualizada correctamente');
       } else {
         setGallery((prev) => [data.item, ...prev]);
-        showNotification('success', 'Publicación agregada a la galería con éxito');
+        showNotification('success', 'Video/foto publicado en la galería con éxito');
       }
 
       setIsGalleryModalOpen(false);
@@ -391,6 +397,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       setServiceDesc(serviceToEdit.desc_en || serviceToEdit.desc_es || '');
       setServiceImageUrl(serviceToEdit.image_url || '');
       setServiceFilePreview(serviceToEdit.image_url || '');
+      setServiceFile(null);
       setServiceOptions(
         Array.isArray(serviceToEdit.options) && serviceToEdit.options.length > 0
           ? serviceToEdit.options
@@ -402,6 +409,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       setServiceDesc('');
       setServiceImageUrl('');
       setServiceFilePreview('');
+      setServiceFile(null);
       setServiceOptions([
         { time: '60 Minutes', price: '$90 USD' },
         { time: '90 Minutes', price: '$130 USD' }
@@ -411,6 +419,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   };
 
   const handleRemoveServiceImage = () => {
+    setServiceFile(null);
     setServiceImageUrl('');
     setServiceFilePreview('');
   };
@@ -418,13 +427,10 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const handleServiceFilePicker = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target.result;
-      setServiceFilePreview(result);
-      setServiceImageUrl(result);
-    };
-    reader.readAsDataURL(file);
+    setServiceFile(file);
+    const preview = URL.createObjectURL(file);
+    setServiceFilePreview(preview);
+    setServiceImageUrl('');
   };
 
   const handleOptionChange = (index, field, value) => {
@@ -454,26 +460,29 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
     try {
       let finalImgUrl = serviceImageUrl;
 
-      // If it's a data URI, upload via persistent Cloudinary endpoint
-      if (serviceImageUrl && serviceImageUrl.startsWith('data:')) {
+      if (serviceFile) {
         try {
-          const upRes = await fetch('/api/upload', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              file: serviceImageUrl,
-              mediaType: 'image'
-            })
+          const sigRes = await fetch('/api/upload?type=image', {
+            headers: { Authorization: `Bearer ${token}` }
           });
-          if (upRes.ok) {
-            const upData = await upRes.json();
-            if (upData.url) finalImgUrl = upData.url;
+          const sig = await sigRes.json();
+          if (sigRes.ok && sig.uploadUrl) {
+            const formData = new FormData();
+            formData.append('file', serviceFile);
+            formData.append('timestamp', sig.timestamp);
+            formData.append('api_key', sig.apiKey);
+            formData.append('signature', sig.signature);
+            formData.append('folder', sig.folder);
+
+            const cRes = await fetch(sig.uploadUrl, {
+              method: 'POST',
+              body: formData
+            });
+            const cData = await cRes.json();
+            if (cData.secure_url) finalImgUrl = cData.secure_url;
           }
-        } catch {
-          // fallback to data URI if needed
+        } catch (err) {
+          console.error('Service image upload error:', err);
         }
       }
 
@@ -1346,7 +1355,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
                     disabled={uploadingFile}
                     className="btn btn-primary"
                   >
-                    {uploadingFile ? 'Guardando...' : editingItem ? 'Actualizar' : 'Publicar'}
+                    {uploadingFile ? (galleryMediaType === 'video' ? 'Subiendo video a Cloudinary (un momento)...' : 'Subiendo...') : editingItem ? 'Actualizar' : 'Publicar'}
                   </button>
                 </div>
               </form>
