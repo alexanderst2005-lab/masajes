@@ -27,17 +27,17 @@ export default async function handler(req, res) {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {};
       const { username, password } = body;
 
-      const validUser = (process.env.ADMIN_EMAIL || process.env.ADMIN_USER || 'admin').toLowerCase().trim();
+      const validUser = (process.env.ADMIN_EMAIL || process.env.ADMIN_USER || 'theartofrelaxation.sxm@gmail.com').toLowerCase().trim();
       const rawToken = (process.env.ADMIN_TOKEN || '').replace(/^["']|["']$/g, '').trim();
       const validPass = (process.env.ADMIN_PASSWORD || rawToken || 'admin123').trim();
 
       const inputUser = (username || '').toLowerCase().trim();
       const inputPass = (password || '').trim();
 
-      // Check credentials (allows matching by username, email or standard admin)
+      // Check credentials (allows matching by email or username)
       const userMatches = inputUser === validUser || 
-                          inputUser === 'admin' || 
-                          inputUser === 'theartofrelaxation.sxm@gmail.com';
+                          inputUser === 'theartofrelaxation.sxm@gmail.com' || 
+                          inputUser === 'admin';
       const passMatches = inputPass === validPass || 
                           inputPass === rawToken || 
                           inputPass === 'admin123';

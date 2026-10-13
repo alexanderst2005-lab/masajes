@@ -687,7 +687,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
 
                 <form onSubmit={handleLogin} className="admin-login-form">
                   <div className="admin-field">
-                    <label htmlFor="admin-username">Usuario o correo electrónico</label>
+                    <label htmlFor="admin-username">Correo o Usuario</label>
                     <div className="admin-input-wrap">
                       <User size={18} className="admin-input-icon" />
                       <input
@@ -695,7 +695,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="admin o tu correo"
+                        placeholder="theartofrelaxation.sxm@gmail.com"
                         autoComplete="username"
                         required
                         autoFocus
@@ -925,15 +925,6 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                     <div className="admin-header-buttons" style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
                       <button
                         type="button"
-                        className="btn btn-outline"
-                        onClick={handleResetDefaultServices}
-                        title="Restaurar o recargar los 6 servicios originales en la base de datos"
-                      >
-                        <RefreshCw size={16} />
-                        <span>Restaurar 6 Base</span>
-                      </button>
-                      <button
-                        type="button"
                         className="btn btn-primary"
                         onClick={() => handleOpenServiceModal()}
                       >
@@ -947,24 +938,15 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                     <div className="admin-empty">
                       <Sparkles size={44} opacity={0.5} />
                       <p>Aún no hay servicios en la base de datos.</p>
-                      <div className="admin-empty-buttons" style={{ display: 'flex', gap: '0.8rem', marginTop: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                        <button
-                          type="button"
-                          className="btn btn-outline"
-                          onClick={handleResetDefaultServices}
-                        >
-                          <RefreshCw size={16} />
-                          <span>Cargar los 6 servicios originales</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={() => handleOpenServiceModal()}
-                        >
-                          <Plus size={16} />
-                          <span>Crear servicio manual</span>
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ marginTop: '1rem' }}
+                        onClick={() => handleOpenServiceModal()}
+                      >
+                        <Plus size={16} />
+                        <span>Crear nuevo servicio</span>
+                      </button>
                     </div>
                   ) : (
                     <div className="admin-gallery-grid">
