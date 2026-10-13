@@ -604,7 +604,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
               title="Volver a la página web"
             >
               <ArrowLeft size={18} />
-              <span>Volver a la web</span>
+              <span className="admin-back-btn-text">Volver a la web</span>
             </button>
             {currentUser && (
               <button
@@ -922,7 +922,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                       <h3>Gestión de Servicios de Masajes</h3>
                       <p>Agrega, edita o elimina tarjetas de servicios que se muestran en la página web.</p>
                     </div>
-                    <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+                    <div className="admin-header-buttons" style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
                       <button
                         type="button"
                         className="btn btn-outline"
@@ -947,7 +947,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                     <div className="admin-empty">
                       <Sparkles size={44} opacity={0.5} />
                       <p>Aún no hay servicios en la base de datos.</p>
-                      <div style={{ display: 'flex', gap: '0.8rem', marginTop: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      <div className="admin-empty-buttons" style={{ display: 'flex', gap: '0.8rem', marginTop: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
                         <button
                           type="button"
                           className="btn btn-outline"
@@ -1499,7 +1499,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {serviceOptions.map((opt, index) => (
-                      <div key={index} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                      <div key={index} className="admin-service-option-row">
                         <input
                           type="text"
                           value={opt.time}
