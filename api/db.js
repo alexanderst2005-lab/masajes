@@ -53,6 +53,7 @@ export async function initTables() {
       request TEXT,
       lang TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW()
+    );
   `;
 
   await sql`
