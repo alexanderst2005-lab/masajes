@@ -545,6 +545,31 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
     }
   };
 
+  const handleResetDefaultServices = async () => {
+    if (!window.confirm('¿Deseas restaurar/cargar los 6 servicios originales en la base de datos?')) return;
+    try {
+      const res = await fetch('/api/services', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ action: 'seed_defaults' })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al cargar servicios');
+      if (Array.isArray(data.items)) {
+        setServices(data.items);
+      } else {
+        await loadAdminData();
+      }
+      showNotification('success', 'Los 6 servicios originales se han cargado correctamente.');
+      if (onServicesUpdated) onServicesUpdated();
+    } catch (err) {
+      showNotification('error', err.message);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -863,30 +888,51 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
                   <div className="admin-section-header">
                     <div>
                       <h3>Gestión de Servicios de Masajes</h3>
-                      <p>Agrega, modifica o elimina tarjetas de servicios que se muestran en la página web.</p>
+                      <p>Agrega, edita o elimina tarjetas de servicios que se muestran en la página web.</p>
                     </div>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => handleOpenServiceModal()}
-                    >
-                      <Plus size={18} />
-                      <span>Nuevo Servicio</span>
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        className="btn btn-outline"
+                        onClick={handleResetDefaultServices}
+                        title="Restaurar o recargar los 6 servicios originales en la base de datos"
+                      >
+                        <RefreshCw size={16} />
+                        <span>Restaurar 6 Base</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => handleOpenServiceModal()}
+                      >
+                        <Plus size={18} />
+                        <span>Nuevo Servicio</span>
+                      </button>
+                    </div>
                   </div>
 
                   {services.length === 0 ? (
                     <div className="admin-empty">
                       <Sparkles size={44} opacity={0.5} />
-                      <p>Aún no has agregado servicios adicionales. Los 6 servicios base se muestran en la web.</p>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        style={{ marginTop: '1rem' }}
-                        onClick={() => handleOpenServiceModal()}
-                      >
-                        Crear tu primer servicio
-                      </button>
+                      <p>Aún no hay servicios en la base de datos.</p>
+                      <div style={{ display: 'flex', gap: '0.8rem', marginTop: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        <button
+                          type="button"
+                          className="btn btn-outline"
+                          onClick={handleResetDefaultServices}
+                        >
+                          <RefreshCw size={16} />
+                          <span>Cargar los 6 servicios originales</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={() => handleOpenServiceModal()}
+                        >
+                          <Plus size={16} />
+                          <span>Crear servicio manual</span>
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="admin-gallery-grid">

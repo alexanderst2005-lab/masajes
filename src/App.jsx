@@ -157,9 +157,9 @@ function App() {
     return () => { cancelled = true; };
   }, []);
 
-  // Map custom services to current language and format
+  // Map services from backend to current language and format
   const dynamicServices = customServices.map(s => ({
-    id: `custom-${s.id}`,
+    id: s.id,
     name: (lang === 'es' ? s.name_es : s.name_en) || s.name_es || s.name_en || 'Servicio de Masaje',
     desc: (lang === 'es' ? s.desc_es : s.desc_en) || s.desc_es || s.desc_en || '',
     img: s.image_url || '/relaxing.jpg',
@@ -168,7 +168,8 @@ function App() {
       : [{ time: '60 min', price: '$90 USD' }]
   }));
 
-  const allServices = [...t.services.list, ...dynamicServices];
+  // If services loaded from backend, use them so any edits from Admin Panel reflect immediately; otherwise fallback to default list
+  const allServices = dynamicServices.length > 0 ? dynamicServices : t.services.list;
 
   // Hash check for #admin URL shortcut
   useEffect(() => {
@@ -423,7 +424,7 @@ function App() {
           <p className="section-subtitle">{t.menu.subtitle}</p>
           
           <div className="menu-list fade-in">
-            {t.menu.items.map((item, i) => (
+            {(allServices.length > 0 ? allServices : t.menu.items).map((item, i) => (
               <div key={i} className="menu-item">
                 <div className="menu-item-info">
                   <h4>{item.name}</h4>
