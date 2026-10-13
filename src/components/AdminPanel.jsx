@@ -695,8 +695,8 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="theartofrelaxation.sxm@gmail.com"
-                        autoComplete="username"
+                        placeholder=""
+                        autoComplete="off"
                         required
                         autoFocus
                       />
@@ -712,8 +712,8 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStand
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        autoComplete="current-password"
+                        placeholder=""
+                        autoComplete="off"
                         required
                       />
                       <button
