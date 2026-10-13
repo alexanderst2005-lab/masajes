@@ -49,7 +49,7 @@ export const DEFAULT_SERVICES = [
     ]
   },
   {
-    name_es: 'Pregnant Women',
+    name_es: 'Masaje para Embarazadas',
     name_en: 'Pregnant Women',
     desc_es: 'Técnicas suaves diseñadas especialmente para futuras madres.',
     desc_en: 'Gentle, soothing techniques designed specifically for expecting mothers.',
@@ -72,6 +72,27 @@ export const DEFAULT_SERVICES = [
     ]
   }
 ];
+
+// Helper to auto-translate English text into Spanish automatically
+async function autoTranslateToSpanish(text) {
+  if (!text || typeof text !== 'string') return '';
+  const trimmed = text.trim();
+  if (!trimmed) return '';
+  try {
+    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=' + encodeURIComponent(trimmed);
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data?.[0])) {
+        const translated = data[0].map(s => s?.[0] || '').join('').trim();
+        if (translated) return translated;
+      }
+    }
+  } catch (err) {
+    console.warn('Auto translation warning, using fallback:', err.message);
+  }
+  return trimmed;
+}
 
 // Cleans the list of price options sent by the admin panel
 function cleanOptions(options) {
@@ -163,20 +184,27 @@ export default async function handler(req, res) {
         return res.status(200).json({ ok: true, items });
       }
 
-      const { name_es, name_en, desc_es, desc_en, options, image_url } = body;
+      const { name, name_en, name_es, desc, desc_en, desc_es, options, image_url } = body;
 
-      if (!cleanText(name_es) && !cleanText(name_en)) {
+      const finalNameEn = cleanText(name_en || name);
+      if (!finalNameEn && !cleanText(name_es)) {
         return res.status(400).json({ error: 'El nombre del servicio es obligatorio' });
       }
 
+      // Auto-translate to Spanish if not specifically provided
+      const finalNameEs = cleanText(name_es) || (await autoTranslateToSpanish(finalNameEn));
+      const finalDescEn = cleanText(desc_en || desc);
+      const finalDescEs = cleanText(desc_es) || (finalDescEn ? await autoTranslateToSpanish(finalDescEn) : null);
+      const finalImageUrl = cleanText(image_url);
+
       const rows = await sql`
         INSERT INTO services (name_es, name_en, desc_es, desc_en, options, image_url)
-        VALUES (${cleanText(name_es)},
-                ${cleanText(name_en)},
-                ${cleanText(desc_es)},
-                ${cleanText(desc_en)},
+        VALUES (${finalNameEs},
+                ${finalNameEn || finalNameEs},
+                ${finalDescEs},
+                ${finalDescEn},
                 ${JSON.stringify(cleanOptions(options))}::jsonb,
-                ${cleanText(image_url)})
+                ${finalImageUrl})
         RETURNING *;
       `;
       return res.status(201).json({ ok: true, item: rows[0] });
@@ -184,23 +212,32 @@ export default async function handler(req, res) {
 
     // PUT: update service
     if (req.method === 'PUT') {
-      const { id, name_es, name_en, desc_es, desc_en, options, image_url } = readBody(req);
+      const body = readBody(req);
+      const { id, name, name_en, name_es, desc, desc_en, desc_es, options, image_url } = body;
 
       if (!id) {
         return res.status(400).json({ error: 'Se requiere el id del servicio' });
       }
-      if (!cleanText(name_es) && !cleanText(name_en)) {
+
+      const finalNameEn = cleanText(name_en || name);
+      if (!finalNameEn && !cleanText(name_es)) {
         return res.status(400).json({ error: 'El nombre del servicio es obligatorio' });
       }
 
+      // Auto-translate to Spanish if not specifically provided
+      const finalNameEs = cleanText(name_es) || (await autoTranslateToSpanish(finalNameEn));
+      const finalDescEn = cleanText(desc_en || desc);
+      const finalDescEs = cleanText(desc_es) || (finalDescEn ? await autoTranslateToSpanish(finalDescEn) : null);
+      const finalImageUrl = cleanText(image_url);
+
       const rows = await sql`
         UPDATE services
-        SET name_es = ${cleanText(name_es)},
-            name_en = ${cleanText(name_en)},
-            desc_es = ${cleanText(desc_es)},
-            desc_en = ${cleanText(desc_en)},
+        SET name_es = ${finalNameEs},
+            name_en = ${finalNameEn || finalNameEs},
+            desc_es = ${finalDescEs},
+            desc_en = ${finalDescEn},
             options = ${JSON.stringify(cleanOptions(options))}::jsonb,
-            image_url = ${cleanText(image_url)}
+            image_url = ${finalImageUrl}
         WHERE id = ${id}
         RETURNING *;
       `;

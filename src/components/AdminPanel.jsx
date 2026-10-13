@@ -56,13 +56,11 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const [filePreview, setFilePreview] = useState('');
   const [uploadingFile, setUploadingFile] = useState(false);
 
-  // Services form state (new or edit)
+  // Services form state (single English input + auto Spanish translation)
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [editingService, setEditingService] = useState(null);
-  const [serviceNameEs, setServiceNameEs] = useState('');
-  const [serviceNameEn, setServiceNameEn] = useState('');
-  const [serviceDescEs, setServiceDescEs] = useState('');
-  const [serviceDescEn, setServiceDescEn] = useState('');
+  const [serviceName, setServiceName] = useState('');
+  const [serviceDesc, setServiceDesc] = useState('');
   const [serviceImageUrl, setServiceImageUrl] = useState('');
   const [serviceFilePreview, setServiceFilePreview] = useState('');
   const [serviceUploadingFile, setServiceUploadingFile] = useState(false);
@@ -389,10 +387,8 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const handleOpenServiceModal = (serviceToEdit = null) => {
     if (serviceToEdit) {
       setEditingService(serviceToEdit);
-      setServiceNameEs(serviceToEdit.name_es || '');
-      setServiceNameEn(serviceToEdit.name_en || '');
-      setServiceDescEs(serviceToEdit.desc_es || '');
-      setServiceDescEn(serviceToEdit.desc_en || '');
+      setServiceName(serviceToEdit.name_en || serviceToEdit.name_es || '');
+      setServiceDesc(serviceToEdit.desc_en || serviceToEdit.desc_es || '');
       setServiceImageUrl(serviceToEdit.image_url || '');
       setServiceFilePreview(serviceToEdit.image_url || '');
       setServiceOptions(
@@ -402,10 +398,8 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       );
     } else {
       setEditingService(null);
-      setServiceNameEs('');
-      setServiceNameEn('');
-      setServiceDescEs('');
-      setServiceDescEn('');
+      setServiceName('');
+      setServiceDesc('');
       setServiceImageUrl('');
       setServiceFilePreview('');
       setServiceOptions([
@@ -414,6 +408,11 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       ]);
     }
     setIsServiceModalOpen(true);
+  };
+
+  const handleRemoveServiceImage = () => {
+    setServiceImageUrl('');
+    setServiceFilePreview('');
   };
 
   const handleServiceFilePicker = (e) => {
@@ -446,8 +445,8 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
 
   const handleSaveService = async (e) => {
     e.preventDefault();
-    if (!serviceNameEs.trim() && !serviceNameEn.trim()) {
-      showNotification('error', 'Por favor ingresa al menos el nombre del servicio.');
+    if (!serviceName.trim()) {
+      showNotification('error', 'Por favor ingresa el nombre del servicio.');
       return;
     }
 
@@ -456,7 +455,7 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       let finalImgUrl = serviceImageUrl;
 
       // If it's a data URI, upload via persistent Cloudinary endpoint
-      if (serviceImageUrl.startsWith('data:')) {
+      if (serviceImageUrl && serviceImageUrl.startsWith('data:')) {
         try {
           const upRes = await fetch('/api/upload', {
             method: 'POST',
@@ -479,11 +478,9 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
       }
 
       const payload = {
-        name_es: serviceNameEs.trim(),
-        name_en: serviceNameEn.trim() || serviceNameEs.trim(),
-        desc_es: serviceDescEs.trim(),
-        desc_en: serviceDescEn.trim() || serviceDescEs.trim(),
-        image_url: finalImgUrl,
+        name: serviceName.trim(),
+        desc: serviceDesc.trim(),
+        image_url: finalImgUrl || null,
         options: serviceOptions.filter((o) => o.time.trim() || o.price.trim())
       };
 
@@ -938,19 +935,26 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
                     <div className="admin-gallery-grid">
                       {services.map((srv) => (
                         <div key={srv.id} className="admin-gallery-card">
-                          <div className="admin-media-thumb">
-                            <img src={srv.image_url || '/relaxing.jpg'} alt={srv.name_es || srv.name_en} />
+                          <div className="admin-media-thumb" style={!srv.image_url ? { background: '#f5f3ef', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                            {srv.image_url ? (
+                              <img src={srv.image_url} alt={srv.name_en || srv.name_es} />
+                            ) : (
+                              <div style={{ textAlign: 'center', color: 'var(--color-primary-dark)', padding: '1rem' }}>
+                                <Sparkles size={26} style={{ margin: '0 auto 0.2rem', display: 'block', opacity: 0.6 }} />
+                                <span style={{ fontSize: '0.72rem', fontWeight: 600 }}>Sin foto</span>
+                              </div>
+                            )}
                             <span className="admin-type-tag">Servicio</span>
                           </div>
                           <div className="admin-gallery-meta">
-                            <h4>{srv.name_es || srv.name_en}</h4>
-                            {srv.name_en && srv.name_es && (
-                              <span style={{ fontSize: '0.78rem', color: 'var(--color-primary-dark)', marginBottom: '0.3rem' }}>
-                                EN: {srv.name_en}
+                            <h4>{srv.name_en || srv.name_es}</h4>
+                            {srv.name_es && srv.name_es !== srv.name_en && (
+                              <span style={{ fontSize: '0.78rem', color: 'var(--color-primary-dark)', marginBottom: '0.3rem', display: 'block' }}>
+                                ES: {srv.name_es}
                               </span>
                             )}
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '0.6rem' }}>
-                              {srv.desc_es || srv.desc_en}
+                              {srv.desc_en || srv.desc_es || 'Sin descripción'}
                             </p>
                             
                             {Array.isArray(srv.options) && srv.options.length > 0 && (
@@ -1365,86 +1369,80 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
               </div>
 
               <form onSubmit={handleSaveService} className="admin-gallery-form">
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                  <div className="form-group">
-                    <label>Nombre del Servicio (Español) *</label>
-                    <input
-                      type="text"
-                      value={serviceNameEs}
-                      onChange={(e) => setServiceNameEs(e.target.value)}
-                      placeholder="Ej. Masaje Aromaterapia"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Nombre del Servicio (Inglés)</label>
-                    <input
-                      type="text"
-                      value={serviceNameEn}
-                      onChange={(e) => setServiceNameEn(e.target.value)}
-                      placeholder="Ej. Aromatherapy Massage"
-                    />
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                  <div className="form-group">
-                    <label>Descripción (Español)</label>
-                    <textarea
-                      value={serviceDescEs}
-                      onChange={(e) => setServiceDescEs(e.target.value)}
-                      placeholder="Breve descripción del beneficio..."
-                      rows="2"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Descripción (Inglés)</label>
-                    <textarea
-                      value={serviceDescEn}
-                      onChange={(e) => setServiceDescEn(e.target.value)}
-                      placeholder="Brief benefit description..."
-                      rows="2"
-                    />
-                  </div>
-                </div>
-
                 <div className="form-group">
-                  <label>Foto representativa del servicio</label>
-                  <label className="file-drop-zone">
-                    <Upload size={24} color="var(--color-primary)" />
-                    <span>Seleccionar foto desde tu dispositivo</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleServiceFilePicker}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                </div>
-
-                <div className="form-group">
-                  <label>O ingresar enlace directo a la imagen</label>
+                  <label style={{ fontWeight: 600 }}>Nombre del Servicio (en Inglés) *</label>
                   <input
-                    type="url"
-                    value={serviceImageUrl}
-                    onChange={(e) => {
-                      setServiceImageUrl(e.target.value);
-                      setServiceFilePreview(e.target.value);
-                    }}
-                    placeholder="https://ejemplo.com/foto-masaje.jpg"
+                    type="text"
+                    value={serviceName}
+                    onChange={(e) => setServiceName(e.target.value)}
+                    placeholder="Ej. Deep Tissue Massage"
+                    required
                   />
                 </div>
 
-                {serviceFilePreview && (
-                  <div className="form-group">
-                    <label>Vista previa de la foto</label>
-                    <div className="upload-preview-box">
-                      <img src={serviceFilePreview} alt="Previsualización servicio" />
+                <div className="form-group">
+                  <label style={{ fontWeight: 600 }}>Descripción del Servicio</label>
+                  <textarea
+                    value={serviceDesc}
+                    onChange={(e) => setServiceDesc(e.target.value)}
+                    placeholder="Ej. Focused pressure to help release muscle tension and tightness..."
+                    rows="2"
+                  />
+                  <small style={{ color: 'var(--color-primary-dark)', display: 'block', marginTop: '0.35rem', fontSize: '0.8rem' }}>
+                    ✨ Escríbelo en inglés. La página web lo traducirá automáticamente al español cuando el visitante cambie de idioma.
+                  </small>
+                </div>
+
+                <div className="form-group" style={{ marginTop: '1rem' }}>
+                  <label style={{ fontWeight: 600, display: 'block', marginBottom: '0.4rem' }}>
+                    Foto del Servicio (Opcional)
+                  </label>
+
+                  {serviceFilePreview ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'flex-start' }}>
+                      <div className="upload-preview-box" style={{ maxWidth: '240px', maxHeight: '160px', overflow: 'hidden', borderRadius: '10px' }}>
+                        <img src={serviceFilePreview} alt="Previsualización servicio" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+                        <label className="btn btn-outline" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <Upload size={15} />
+                          <span>Cambiar foto</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleServiceFilePicker}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                        <button
+                          type="button"
+                          className="btn btn-outline"
+                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', color: '#c0392b', borderColor: '#e74c3c', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+                          onClick={handleRemoveServiceImage}
+                        >
+                          <Trash2 size={15} />
+                          <span>Eliminar imagen</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  ) : (
+                    <div>
+                      <label className="file-drop-zone" style={{ padding: '1.2rem' }}>
+                        <Upload size={24} color="var(--color-primary)" />
+                        <span style={{ fontSize: '0.9rem' }}>Seleccionar foto desde tu dispositivo</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleServiceFilePicker}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                      <small style={{ color: 'var(--color-text-light)', display: 'block', marginTop: '0.35rem', fontSize: '0.8rem' }}>
+                        Si no deseas imagen para este servicio, puedes dejarlo sin foto.
+                      </small>
+                    </div>
+                  )}
+                </div>
 
                 {/* Opciones de duración y precio */}
                 <div className="form-group" style={{ marginTop: '1.2rem' }}>

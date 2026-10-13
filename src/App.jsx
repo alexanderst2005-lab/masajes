@@ -160,9 +160,9 @@ function App() {
   // Map services from backend to current language and format
   const dynamicServices = customServices.map(s => ({
     id: s.id,
-    name: (lang === 'es' ? s.name_es : s.name_en) || s.name_es || s.name_en || 'Servicio de Masaje',
-    desc: (lang === 'es' ? s.desc_es : s.desc_en) || s.desc_es || s.desc_en || '',
-    img: s.image_url || '/relaxing.jpg',
+    name: (lang === 'es' ? (s.name_es || s.name_en) : (s.name_en || s.name_es)) || 'Massage Service',
+    desc: (lang === 'es' ? (s.desc_es || s.desc_en) : (s.desc_en || s.desc_es)) || '',
+    img: s.image_url || '',
     options: Array.isArray(s.options) && s.options.length > 0
       ? s.options
       : [{ time: '60 min', price: '$90 USD' }]
@@ -344,8 +344,10 @@ function App() {
         <div className="services-grid">
           {allServices.map(service => (
             <div key={service.id} className="service-card fade-in">
-              <img src={service.img} alt={service.name} className="service-img" />
-              <div className="service-content">
+              {service.img ? (
+                <img src={service.img} alt={service.name} className="service-img" />
+              ) : null}
+              <div className="service-content" style={!service.img ? { paddingTop: '1.8rem' } : {}}>
                 <h3 className="service-title">{service.name}</h3>
                 <p className="service-desc">{service.desc}</p>
                 <div className="service-footer">
