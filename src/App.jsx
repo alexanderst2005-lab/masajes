@@ -388,27 +388,6 @@ function App() {
       {/* Dynamic Nuestro Trabajo Gallery Section */}
       <WorkGallerySection lang={lang} />
 
-      {/* Gallery Mood / Ambient */}
-      <section className="container fade-in" style={{ padding: '3rem 2rem 5rem' }}>
-        <h2 className="section-title">{t.gallery.title}</h2>
-        <p className="section-subtitle">{t.gallery.subtitle}</p>
-        
-        <div className="gallery-grid fade-in">
-          <div className="gallery-item gallery-item-1">
-            <img src="/relaxing.jpg" alt="Spa" />
-          </div>
-          <div className="gallery-item gallery-item-2">
-            <img src="/deeptissue.jpg" alt="Massage" />
-          </div>
-          <div className="gallery-item gallery-item-3">
-            <img src="/prenatal.jpg" alt="Oils" />
-          </div>
-          <div className="gallery-item gallery-item-4">
-            <img src="/couple.png" alt="Stones" />
-          </div>
-        </div>
-      </section>
-
       {/* Menu / Pricing */}
       <section className="menu-section fade-in">
         <div className="container">
