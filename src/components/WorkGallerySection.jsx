@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Play, Maximize2, X, Image as ImageIcon, Video as VideoIcon, ChevronDown } from 'lucide-react';
 
 /**
@@ -67,15 +68,18 @@ export default function WorkGallerySection({ lang = 'es' }) {
   useEffect(() => {
     if (!activeMedia) {
       document.body.style.overflow = 'auto';
+      document.body.classList.remove('lightbox-open');
       return undefined;
     }
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('lightbox-open');
     const onKeyDown = (e) => {
       if (e.key === 'Escape') setActiveMedia(null);
     };
     window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = 'auto';
+      document.body.classList.remove('lightbox-open');
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [activeMedia]);
@@ -197,55 +201,79 @@ export default function WorkGallerySection({ lang = 'es' }) {
         )}
       </div>
 
-      {/* Lightbox / Video Player Modal */}
-      {activeMedia && (
-        <div
-          className="media-modal-backdrop"
-          onClick={() => setActiveMedia(null)}
-          role="dialog"
-          aria-modal="true"
-        >
+      {/* Lightbox / Video Player Modal via Portal */}
+      {activeMedia &&
+        createPortal(
           <div
-            className="media-modal-content"
-            onClick={(e) => e.stopPropagation()}
+            className="media-modal-backdrop"
+            onClick={() => setActiveMedia(null)}
+            onTouchEnd={(e) => {
+              if (e.target === e.currentTarget) {
+                setActiveMedia(null);
+              }
+            }}
+            role="dialog"
+            aria-modal="true"
           >
+            {/* Main Top Close Button (Safe-Area aware, always visible and clickable) */}
             <button
               type="button"
               className="media-modal-close-btn"
-              onClick={() => setActiveMedia(null)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveMedia(null);
+              }}
               aria-label={t.close}
             >
-              <X size={26} />
+              <X size={20} />
+              <span className="media-modal-close-text">{t.close}</span>
             </button>
 
-            <div className="media-modal-display">
-              {activeMedia.media_type === 'video' ? (
-                <video
-                  src={activeMedia.url}
-                  poster={getVideoPoster(activeMedia.url, activeMedia.thumbnail_url)}
-                  controls
-                  autoPlay
-                  playsInline
-                  className="media-modal-video"
-                />
-              ) : (
-                <img
-                  src={activeMedia.url}
-                  alt={activeMedia.title || 'Foto ampliada'}
-                  className="media-modal-image"
-                />
-              )}
-            </div>
-
-            {(activeMedia.title || activeMedia.description) && (
-              <div className="media-modal-caption">
-                {activeMedia.title && <h4>{activeMedia.title}</h4>}
-                {activeMedia.description && <p>{activeMedia.description}</p>}
+            <div
+              className="media-modal-content"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="media-modal-display">
+                {activeMedia.media_type === 'video' ? (
+                  <video
+                    key={activeMedia.url}
+                    src={activeMedia.url}
+                    poster={getVideoPoster(activeMedia.url, activeMedia.thumbnail_url)}
+                    controls
+                    autoPlay
+                    playsInline
+                    webkit-playsinline="true"
+                    className="media-modal-video"
+                  />
+                ) : (
+                  <img
+                    src={activeMedia.url}
+                    alt={activeMedia.title || 'Foto ampliada'}
+                    className="media-modal-image"
+                  />
+                )}
               </div>
-            )}
-          </div>
-        </div>
-      )}
+
+              {(activeMedia.title || activeMedia.description) && (
+                <div className="media-modal-caption">
+                  {activeMedia.title && <h4>{activeMedia.title}</h4>}
+                  {activeMedia.description && <p>{activeMedia.description}</p>}
+                </div>
+              )}
+
+              {/* Bottom Close Button for easy mobile access */}
+              <button
+                type="button"
+                className="media-modal-bottom-close-btn"
+                onClick={() => setActiveMedia(null)}
+              >
+                <X size={18} />
+                <span>{t.close}</span>
+              </button>
+            </div>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }
