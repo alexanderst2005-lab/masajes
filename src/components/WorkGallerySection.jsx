@@ -41,15 +41,20 @@ export default function WorkGallerySection({ lang = 'es' }) {
     };
   }, []);
 
-  // Prevent background scroll when lightbox is open
+  // Prevent background scroll when lightbox is open and allow closing with Esc
   useEffect(() => {
-    if (activeMedia) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    if (!activeMedia) {
       document.body.style.overflow = 'auto';
+      return undefined;
     }
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setActiveMedia(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', onKeyDown);
     };
   }, [activeMedia]);
 

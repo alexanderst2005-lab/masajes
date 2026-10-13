@@ -3311,3 +3311,161 @@ footer {
 .reviewer-avatar {
   box-shadow: 0 6px 14px rgba(115, 128, 108, 0.35);
 }
+
+/* ========================================================
+   NUESTRO TRABAJO - MOSAICO Y VISOR LIMPIO
+   ======================================================== */
+.work-gallery-section {
+  background:
+    radial-gradient(circle at 90% 8%, rgba(196, 167, 125, 0.16), transparent 40%),
+    radial-gradient(circle at 5% 90%, rgba(140, 153, 133, 0.14), transparent 40%),
+    #F8F5F1;
+}
+
+/* Mosaico: cada foto conserva su proporción original, sin recortes */
+.work-cards-grid {
+  display: block;
+  column-count: 3;
+  column-gap: 1.6rem;
+  margin-top: 1.5rem;
+}
+
+.work-card {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1.6rem;
+  break-inside: avoid;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 26px rgba(74, 70, 67, 0.1);
+  vertical-align: top;
+}
+
+.work-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(74, 70, 67, 0.18);
+}
+
+.work-card-media-wrapper {
+  aspect-ratio: auto;
+  background-color: #EDE9E3;
+}
+
+.work-card-media {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.work-card-video-thumb {
+  height: auto;
+}
+
+.work-card-zoom-icon {
+  width: 38px;
+  height: 38px;
+  backdrop-filter: blur(6px);
+}
+
+.work-card-info {
+  padding: 1.1rem 1.3rem 1.3rem;
+}
+
+/* Visor: solo la imagen, sin recuadro negro a los lados */
+.media-modal-backdrop {
+  background: rgba(10, 12, 10, 0.88);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+}
+
+.media-modal-content {
+  width: auto;
+  max-width: 96vw;
+  max-height: 96vh;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  align-items: center;
+  animation: scaleUp 0.25s ease-out;
+}
+
+.media-modal-display {
+  width: auto;
+  max-height: none;
+  background: transparent;
+}
+
+.media-modal-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 94vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+}
+
+.media-modal-video {
+  display: block;
+  width: auto;
+  max-width: 94vw;
+  max-height: 82vh;
+  border-radius: 14px;
+  background: #000;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+}
+
+.media-modal-close-btn {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2D332B;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 10005;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.media-modal-close-btn:hover {
+  background: #FFFFFF;
+  transform: scale(1.1) rotate(90deg);
+}
+
+.media-modal-caption {
+  max-width: 760px;
+  margin-top: 1rem;
+  padding: 0.4rem 1rem;
+  background: transparent;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .work-cards-grid {
+    column-count: 2;
+    column-gap: 1.1rem;
+  }
+
+  .work-card {
+    margin-bottom: 1.1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .work-cards-grid {
+    column-count: 1;
+  }
+
+  .media-modal-close-btn {
+    top: 14px;
+    right: 14px;
+  }
+
+  .media-modal-image,
+  .media-modal-video {
+    max-height: 78vh;
+  }
+}
