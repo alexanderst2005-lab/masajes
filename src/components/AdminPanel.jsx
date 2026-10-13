@@ -22,6 +22,7 @@ import {
   ShieldCheck,
   Sparkles
 } from 'lucide-react';
+import { getVideoPoster } from './WorkGallerySection.jsx';
 
 export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const [token, setToken] = useState(() => localStorage.getItem('sxm_admin_token') || '');
@@ -307,11 +308,13 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
         finalUrl = cData.secure_url;
       }
 
+      const autoThumbnail = galleryMediaType === 'video' ? getVideoPoster(finalUrl) : null;
       const payload = {
         title: galleryTitle.trim(),
         description: galleryDesc.trim(),
         media_type: galleryMediaType,
-        url: finalUrl
+        url: finalUrl,
+        thumbnail_url: autoThumbnail || null
       };
 
       let res;
@@ -1042,7 +1045,11 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
                         <div key={item.id} className="admin-gallery-card">
                           <div className="admin-media-thumb">
                             {item.media_type === 'video' ? (
-                              <video src={item.url} preload="metadata" />
+                              <img
+                                src={getVideoPoster(item.url, item.thumbnail_url) || item.url}
+                                alt={item.title || 'Video'}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
                             ) : (
                               <img src={item.url} alt={item.title || 'Foto'} />
                             )}

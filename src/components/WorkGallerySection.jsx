@@ -1,6 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Maximize2, X, Image as ImageIcon, Video as VideoIcon, ChevronDown } from 'lucide-react';
 
+/**
+ * Derives a reliable JPG thumbnail/poster for videos, especially Cloudinary URLs.
+ * Mobile Safari blocks video frame decoding on preload, causing blank gray screens unless a poster is set.
+ */
+export function getVideoPoster(url, thumbnail) {
+  if (thumbnail && typeof thumbnail === 'string' && thumbnail.trim()) {
+    return thumbnail.trim();
+  }
+  if (!url || typeof url !== 'string') return '';
+
+  // Cloudinary video transformation: change extension to .jpg and inject so_0 (start-offset 0 frame)
+  if (url.includes('cloudinary.com') && url.includes('/video/upload/')) {
+    const jpgUrl = url.replace(/\.(mp4|mov|webm|ogv|m4v|avi|mkv)$/i, '.jpg');
+    if (!jpgUrl.includes('/so_0/')) {
+      return jpgUrl.replace('/video/upload/', '/video/upload/so_0/');
+    }
+    return jpgUrl;
+  }
+
+  return '';
+}
+
 export default function WorkGallerySection({ lang = 'es' }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,6 +103,7 @@ export default function WorkGallerySection({ lang = 'es' }) {
             <div className="work-cards-grid">
               {displayedItems.map((item) => {
                 const isVideo = item.media_type === 'video';
+                const posterUrl = isVideo ? getVideoPoster(item.url, item.thumbnail_url) : null;
 
                 return (
                   <div
@@ -94,16 +117,25 @@ export default function WorkGallerySection({ lang = 'es' }) {
                     <div className="work-card-media-wrapper">
                       {isVideo ? (
                         <div className="work-card-video-thumb">
-                          <video
-                            src={item.url}
-                            preload="metadata"
-                            muted
-                            playsInline
-                            className="work-card-media"
-                          />
+                          {posterUrl ? (
+                            <img
+                              src={posterUrl}
+                              alt={item.title || 'Video de sesión'}
+                              loading="lazy"
+                              className="work-card-media"
+                            />
+                          ) : (
+                            <video
+                              src={`${item.url}#t=0.001`}
+                              preload="metadata"
+                              muted
+                              playsInline
+                              className="work-card-media"
+                            />
+                          )}
                           <div className="work-card-play-overlay">
                             <div className="play-button-circle">
-                              <Play size={22} fill="white" color="white" />
+                              <Play size={20} fill="white" color="white" />
                             </div>
                           </div>
                         </div>
@@ -190,6 +222,7 @@ export default function WorkGallerySection({ lang = 'es' }) {
               {activeMedia.media_type === 'video' ? (
                 <video
                   src={activeMedia.url}
+                  poster={getVideoPoster(activeMedia.url, activeMedia.thumbnail_url)}
                   controls
                   autoPlay
                   playsInline

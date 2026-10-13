@@ -11,7 +11,7 @@ const WHATSAPP_NUMBER = '590690221868'; // e.g. '1234567890' (Include country co
 // Content structure to allow easy editing and bilingual support
 const content = {
   en: {
-    nav: { home: 'Home', services: 'Services', work: 'Our Work', about: 'About', benefits: 'Benefits', reviews: 'Reviews', contact: 'Contact', book: 'Book a Massage', admin: 'Admin Portal' },
+    nav: { home: 'Home', services: 'Services', work: 'Our Work', about: 'About', benefits: 'Benefits', reviews: 'Reviews', social: 'Social', contact: 'Contact', book: 'Book a Massage', admin: 'Admin Portal' },
     hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: "With over 5 years of professional experience, we offer mobile massage therapy designed to help you relax, release tension, and feel your best.\n\nServing Sint Maarten & Saint Martin\nMobile massage services available across both sides of the island.", bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
       { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 / 90 Minutes', price: 'From $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
@@ -45,6 +45,32 @@ const content = {
     ]},
     booking: { title: 'Ready to Relax?', subtitle: 'Give yourself the time you deserve. Book your massage session today.', btn: 'Book an Appointment' },
     location: { title: 'Find Us', address: 'Sint Maarten', phone: '+590 690 22-1868', email: 'theartofrelaxation.sxm@gmail.com' },
+    social: {
+      tag: 'Connect With Us',
+      title: 'Our Social Media',
+      subtitle: 'Follow our daily sessions, peaceful moments, clients, villas and yachts wellness experiences across Sint Maarten',
+      instagram: {
+        name: 'Instagram',
+        handle: '@sxm.mobilemassage',
+        desc: 'Watch our stories, sessions in villas & yachts, and client moments',
+        btn: 'Follow on Instagram',
+        url: 'https://instagram.com/sxm.mobilemassage?dlrf=Z2J1YnJudXpldWZk&utm_source=qr'
+      },
+      facebook: {
+        name: 'Facebook',
+        handle: 'SXM Mobile Massage',
+        desc: 'Stay updated with our latest news, reviews, announcements, and direct messages',
+        btn: 'Follow on Facebook',
+        url: 'https://www.facebook.com/share/1F5Nqbh26D/?mibextid=wwXIfr'
+      },
+      tiktok: {
+        name: 'TikTok',
+        handle: '@sxm.mobilemassage',
+        desc: 'Relaxing ASMR massage videos, turquoise ocean views, and wellness tips',
+        btn: 'Follow on TikTok',
+        url: 'https://www.tiktok.com/@sxm.mobilemassage?_r=1&_t=ZS-9AWfRMolJpu'
+      }
+    },
     finalCta: { t1: 'Your body deserves a little care.', t2: 'Take a moment for yourself.', btn: 'Book Your Massage' },
     footer: { rights: '© 2026 The Art of Relaxation Sxm. All rights reserved.' },
     modal: {
@@ -62,7 +88,7 @@ const content = {
     }
   },
   es: {
-    nav: { home: 'Inicio', services: 'Servicios', work: 'Nuestro Trabajo', about: 'Sobre mí', benefits: 'Beneficios', reviews: 'Reseñas', contact: 'Contacto', book: 'Reservar un masaje', admin: 'Panel de Administración' },
+    nav: { home: 'Inicio', services: 'Servicios', work: 'Nuestro Trabajo', about: 'Sobre mí', benefits: 'Beneficios', reviews: 'Reseñas', social: 'Nuestras Redes', contact: 'Contacto', book: 'Reservar un masaje', admin: 'Panel de Administración' },
     hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: "Con más de 5 años de experiencia profesional, ofrecemos terapia de masajes a domicilio diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor.\n\nSirviendo a Sint Maarten y Saint Martin\nServicios de masajes a domicilio disponibles en ambos lados de la isla.", bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
       { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 / 90 Minutes', price: 'Desde $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
@@ -96,6 +122,32 @@ const content = {
     ]},
     booking: { title: '¿Lista para relajarte?', subtitle: 'Date el tiempo que mereces. Reserva tu sesión de masaje hoy mismo.', btn: 'Agendar una cita' },
     location: { title: 'Encuéntranos', address: 'Sint Maarten', phone: '+590 690 22-1868', email: 'theartofrelaxation.sxm@gmail.com' },
+    social: {
+      tag: 'Conéctate Con Nosotros',
+      title: 'Nuestras Redes',
+      subtitle: 'Síguenos y descubre nuestro día a día, sesiones en villas y yates, testimonios y promociones exclusivas en Sint Maarten',
+      instagram: {
+        name: 'Instagram',
+        handle: '@sxm.mobilemassage',
+        desc: 'Historias diarias, sesiones exclusivas y momentos de relajación en la isla',
+        btn: 'Seguir en Instagram',
+        url: 'https://instagram.com/sxm.mobilemassage?dlrf=Z2J1YnJudXpldWZk&utm_source=qr'
+      },
+      facebook: {
+        name: 'Facebook',
+        handle: 'SXM Mobile Massage',
+        desc: 'Novedades, opiniones, fotos y contacto directo con nuestra comunidad',
+        btn: 'Seguir en Facebook',
+        url: 'https://www.facebook.com/share/1F5Nqbh26D/?mibextid=wwXIfr'
+      },
+      tiktok: {
+        name: 'TikTok',
+        handle: '@sxm.mobilemassage',
+        desc: 'Videos relajantes de masajes, vistas paradisíacas y tips de bienestar',
+        btn: 'Seguir en TikTok',
+        url: 'https://www.tiktok.com/@sxm.mobilemassage?_r=1&_t=ZS-9AWfRMolJpu'
+      }
+    },
     finalCta: { t1: 'Tu cuerpo merece un poco de cuidado.', t2: 'Regálate un momento para ti.', btn: 'Reservar mi masaje' },
     footer: { rights: '© 2026 The Art of Relaxation Sxm. Todos los derechos reservados.' },
     modal: {
@@ -277,6 +329,7 @@ function App() {
             <a href="#about" className="nav-link">{t.nav.about}</a>
             <a href="#benefits" className="nav-link">{t.nav.benefits}</a>
             <a href="#reviews" className="nav-link">{t.nav.reviews}</a>
+            <a href="#social" className="nav-link">{t.nav.social}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
             
             <div className="lang-switch desktop-lang">
@@ -309,6 +362,7 @@ function App() {
             <a href="#about" onClick={() => setMobileMenuOpen(false)}>{t.nav.about}</a>
             <a href="#benefits" onClick={() => setMobileMenuOpen(false)}>{t.nav.benefits}</a>
             <a href="#reviews" onClick={() => setMobileMenuOpen(false)}>{t.nav.reviews}</a>
+            <a href="#social" onClick={() => setMobileMenuOpen(false)}>{t.nav.social}</a>
             <a href="#contact" onClick={() => setMobileMenuOpen(false)}>{t.nav.contact}</a>
           </div>
         )}
@@ -478,6 +532,99 @@ function App() {
         </div>
       </section>
 
+      {/* Social Media Section */}
+      <section id="social" className="social-section fade-in">
+        <div className="container">
+          <div className="social-header">
+            <span className="social-tag">{t.social.tag}</span>
+            <h2 className="section-title">{t.social.title}</h2>
+            <p className="section-subtitle">{t.social.subtitle}</p>
+          </div>
+
+          <div className="social-grid">
+            {/* Instagram */}
+            <a
+              href={t.social.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-card social-card-instagram"
+              aria-label="Instagram SXM Mobile Massage"
+            >
+              <div className="social-card-badge">Instagram</div>
+              <div className="social-card-icon-wrapper instagram-icon-wrapper">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </div>
+              <h3 className="social-card-name">{t.social.instagram.name}</h3>
+              <span className="social-card-handle">{t.social.instagram.handle}</span>
+              <p className="social-card-desc">{t.social.instagram.desc}</p>
+              <div className="social-card-action">
+                <span>{t.social.instagram.btn}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+
+            {/* Facebook */}
+            <a
+              href={t.social.facebook.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-card social-card-facebook"
+              aria-label="Facebook SXM Mobile Massage"
+            >
+              <div className="social-card-badge">Facebook</div>
+              <div className="social-card-icon-wrapper facebook-icon-wrapper">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </div>
+              <h3 className="social-card-name">{t.social.facebook.name}</h3>
+              <span className="social-card-handle">{t.social.facebook.handle}</span>
+              <p className="social-card-desc">{t.social.facebook.desc}</p>
+              <div className="social-card-action">
+                <span>{t.social.facebook.btn}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+
+            {/* TikTok */}
+            <a
+              href={t.social.tiktok.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-card social-card-tiktok"
+              aria-label="TikTok SXM Mobile Massage"
+            >
+              <div className="social-card-badge">TikTok</div>
+              <div className="social-card-icon-wrapper tiktok-icon-wrapper">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.94-4.57V8.72a8.27 8.27 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1-.09z"/>
+                </svg>
+              </div>
+              <h3 className="social-card-name">{t.social.tiktok.name}</h3>
+              <span className="social-card-handle">{t.social.tiktok.handle}</span>
+              <p className="social-card-desc">{t.social.tiktok.desc}</p>
+              <div className="social-card-action">
+                <span>{t.social.tiktok.btn}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="final-cta fade-in">
         <div className="final-cta-content">
@@ -505,14 +652,52 @@ function App() {
                 <li><a href="#home">{t.nav.home}</a></li>
                 <li><a href="#services">{t.nav.services}</a></li>
                 <li><a href="#about">{t.nav.about}</a></li>
+                <li><a href="#social">{t.nav.social}</a></li>
                 <li><a href="#contact">{t.nav.contact}</a></li>
               </ul>
             </div>
             
             <div className="footer-col">
-              <h3>Connect</h3>
-              <div className="social-links">
-                <a href="#"><Mail size={20} /></a>
+              <h3>{lang === 'es' ? 'Nuestras Redes' : 'Social Networks'}</h3>
+              <div className="social-links" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <a
+                  href={t.social.instagram.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-link"
+                  aria-label="Instagram"
+                  title="Instagram"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a
+                  href={t.social.facebook.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-link"
+                  aria-label="Facebook"
+                  title="Facebook"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a
+                  href={t.social.tiktok.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-link"
+                  aria-label="TikTok"
+                  title="TikTok"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.94-4.57V8.72a8.27 8.27 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1-.09z"/></svg>
+                </a>
+                <a
+                  href={`mailto:${t.location.email}`}
+                  className="footer-social-link"
+                  aria-label="Email"
+                  title="Email"
+                >
+                  <Mail size={19} />
+                </a>
               </div>
             </div>
           </div>
