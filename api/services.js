@@ -130,6 +130,11 @@ export default async function handler(req, res) {
 
     // GET: public list of services (auto-seeds defaults if table is empty)
     if (req.method === 'GET') {
+      // Ensure any services that were added with sort_order = 0 move to the end
+      await sql`
+        UPDATE services SET sort_order = 100 + id WHERE sort_order = 0;
+      `;
+
       let items = await sql`
         SELECT * FROM services ORDER BY sort_order ASC, id ASC;
       `;
@@ -197,14 +202,21 @@ export default async function handler(req, res) {
       const finalDescEs = cleanText(desc_es) || (finalDescEn ? await autoTranslateToSpanish(finalDescEn) : null);
       const finalImageUrl = cleanText(image_url);
 
+      // Calculate next sort order so new services are ALWAYS added to the very end
+      const maxRow = await sql`
+        SELECT COALESCE(MAX(sort_order), 0) AS max_order FROM services;
+      `;
+      const nextSortOrder = Math.max(Number(maxRow[0]?.max_order || 0), 6) + 1;
+
       const rows = await sql`
-        INSERT INTO services (name_es, name_en, desc_es, desc_en, options, image_url)
+        INSERT INTO services (name_es, name_en, desc_es, desc_en, options, image_url, sort_order)
         VALUES (${finalNameEs},
                 ${finalNameEn || finalNameEs},
                 ${finalDescEs},
                 ${finalDescEn},
                 ${JSON.stringify(cleanOptions(options))}::jsonb,
-                ${finalImageUrl})
+                ${finalImageUrl},
+                ${nextSortOrder})
         RETURNING *;
       `;
       return res.status(201).json({ ok: true, item: rows[0] });

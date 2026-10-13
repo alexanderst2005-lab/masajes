@@ -372,9 +372,12 @@ section {
 
 .service-img {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 4 / 3;
+  max-height: 290px;
   object-fit: cover;
+  object-position: center;
   display: block;
+  background-color: #F7F5F0;
 }
 
 .service-content {
@@ -2088,14 +2091,15 @@ footer {
 .admin-media-thumb {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  background: #111;
+  aspect-ratio: 4 / 3;
+  background: #F7F5F0;
 }
 
 .admin-media-thumb img, .admin-media-thumb video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .admin-type-tag {
