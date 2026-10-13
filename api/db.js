@@ -53,6 +53,19 @@ export async function initTables() {
       request TEXT,
       lang TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW()
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS services (
+      id SERIAL PRIMARY KEY,
+      name_es TEXT,
+      name_en TEXT,
+      desc_es TEXT,
+      desc_en TEXT,
+      options JSONB NOT NULL DEFAULT '[]'::jsonb,
+      image_url TEXT,
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      created_at TIMESTAMPTZ DEFAULT NOW()
     );
   `;
 }

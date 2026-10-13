@@ -128,6 +128,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [customServices, setCustomServices] = useState([]);
   
   const [formData, setFormData] = useState({
     service: '',
@@ -141,6 +142,33 @@ function App() {
   });
 
   const t = content[lang];
+
+  // Fetch custom services added from Admin Panel
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/services')
+      .then(res => res.ok ? res.json() : [])
+      .then(data => {
+        if (!cancelled && Array.isArray(data)) {
+          setCustomServices(data);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  // Map custom services to current language and format
+  const dynamicServices = customServices.map(s => ({
+    id: `custom-${s.id}`,
+    name: (lang === 'es' ? s.name_es : s.name_en) || s.name_es || s.name_en || 'Servicio de Masaje',
+    desc: (lang === 'es' ? s.desc_es : s.desc_en) || s.desc_es || s.desc_en || '',
+    img: s.image_url || '/relaxing.jpg',
+    options: Array.isArray(s.options) && s.options.length > 0
+      ? s.options
+      : [{ time: '60 min', price: '$90 USD' }]
+  }));
+
+  const allServices = [...t.services.list, ...dynamicServices];
 
   // Hash check for #admin URL shortcut
   useEffect(() => {
@@ -166,13 +194,13 @@ function App() {
 
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [lang]); 
+  }, [lang, customServices]); 
 
   const toggleLang = (newLang) => setLang(newLang);
 
   const openBooking = (e, serviceName = '') => {
     e.preventDefault();
-    setFormData(prev => ({ ...prev, service: serviceName || t.services.list[0].name }));
+    setFormData(prev => ({ ...prev, service: serviceName || allServices[0]?.name || t.services.list[0].name }));
     setIsModalOpen(true);
     document.body.style.overflow = 'hidden';
   };
@@ -313,7 +341,7 @@ function App() {
         <p className="section-subtitle">{t.services.subtitle}</p>
         
         <div className="services-grid">
-          {t.services.list.map(service => (
+          {allServices.map(service => (
             <div key={service.id} className="service-card fade-in">
               <img src={service.img} alt={service.name} className="service-img" />
               <div className="service-content">
@@ -513,7 +541,7 @@ function App() {
               <div className="form-group">
                 <label>{t.modal.service}</label>
                 <select name="service" value={formData.service} onChange={handleFormChange} required>
-                  {t.services.list.map(s => (
+                  {allServices.map(s => (
                     <option key={s.id} value={s.name}>{s.name}</option>
                   ))}
                 </select>
@@ -573,6 +601,12 @@ function App() {
       {/* Admin Panel Portal */}
       <AdminPanel
         isOpen={isAdminOpen}
+        onServicesUpdated={() => {
+          fetch('/api/services')
+            .then(res => res.ok ? res.json() : [])
+            .then(data => { if (Array.isArray(data)) setCustomServices(data); })
+            .catch(() => {});
+        }}
         onClose={() => {
           setIsAdminOpen(false);
           if (window.location.hash === '#admin') {

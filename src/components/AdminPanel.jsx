@@ -23,7 +23,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-export default function AdminPanel({ isOpen, onClose }) {
+export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
   const [token, setToken] = useState(() => localStorage.getItem('sxm_admin_token') || '');
   const [currentUser, setCurrentUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(() => !!localStorage.getItem('sxm_admin_token'));
@@ -36,9 +36,10 @@ export default function AdminPanel({ isOpen, onClose }) {
   const [showPassword, setShowPassword] = useState(false);
 
   // Active admin tab
-  const [activeTab, setActiveTab] = useState('overview'); // overview | gallery | reviews | bookings
+  const [activeTab, setActiveTab] = useState('overview'); // overview | services | gallery | reviews | bookings
 
   // Data states
+  const [services, setServices] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -54,6 +55,21 @@ export default function AdminPanel({ isOpen, onClose }) {
   const [galleryDesc, setGalleryDesc] = useState('');
   const [filePreview, setFilePreview] = useState('');
   const [uploadingFile, setUploadingFile] = useState(false);
+
+  // Services form state (new or edit)
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [editingService, setEditingService] = useState(null);
+  const [serviceNameEs, setServiceNameEs] = useState('');
+  const [serviceNameEn, setServiceNameEn] = useState('');
+  const [serviceDescEs, setServiceDescEs] = useState('');
+  const [serviceDescEn, setServiceDescEn] = useState('');
+  const [serviceImageUrl, setServiceImageUrl] = useState('');
+  const [serviceFilePreview, setServiceFilePreview] = useState('');
+  const [serviceUploadingFile, setServiceUploadingFile] = useState(false);
+  const [serviceOptions, setServiceOptions] = useState([
+    { time: '60 Minutes', price: '$90 USD' },
+    { time: '90 Minutes', price: '$130 USD' }
+  ]);
 
   // Check existing session token on mount
   useEffect(() => {
@@ -89,12 +105,17 @@ export default function AdminPanel({ isOpen, onClose }) {
     try {
       const headers = { Authorization: `Bearer ${token}` };
 
-      const [reviewsRes, galleryRes, bookingsRes] = await Promise.all([
+      const [servicesRes, reviewsRes, galleryRes, bookingsRes] = await Promise.all([
+        fetch('/api/services', { headers }),
         fetch('/api/reviews', { headers }),
         fetch('/api/gallery', { headers }),
         fetch('/api/bookings', { headers })
       ]);
 
+      if (servicesRes.ok) {
+        const sData = await servicesRes.json();
+        setServices(Array.isArray(sData) ? sData : []);
+      }
       if (reviewsRes.ok) {
         const rData = await reviewsRes.json();
         setReviews(Array.isArray(rData) ? rData : []);
@@ -364,6 +385,166 @@ export default function AdminPanel({ isOpen, onClose }) {
     }
   };
 
+  // Service Handlers
+  const handleOpenServiceModal = (serviceToEdit = null) => {
+    if (serviceToEdit) {
+      setEditingService(serviceToEdit);
+      setServiceNameEs(serviceToEdit.name_es || '');
+      setServiceNameEn(serviceToEdit.name_en || '');
+      setServiceDescEs(serviceToEdit.desc_es || '');
+      setServiceDescEn(serviceToEdit.desc_en || '');
+      setServiceImageUrl(serviceToEdit.image_url || '');
+      setServiceFilePreview(serviceToEdit.image_url || '');
+      setServiceOptions(
+        Array.isArray(serviceToEdit.options) && serviceToEdit.options.length > 0
+          ? serviceToEdit.options
+          : [{ time: '60 Minutes', price: '$90 USD' }]
+      );
+    } else {
+      setEditingService(null);
+      setServiceNameEs('');
+      setServiceNameEn('');
+      setServiceDescEs('');
+      setServiceDescEn('');
+      setServiceImageUrl('');
+      setServiceFilePreview('');
+      setServiceOptions([
+        { time: '60 Minutes', price: '$90 USD' },
+        { time: '90 Minutes', price: '$130 USD' }
+      ]);
+    }
+    setIsServiceModalOpen(true);
+  };
+
+  const handleServiceFilePicker = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target.result;
+      setServiceFilePreview(result);
+      setServiceImageUrl(result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleOptionChange = (index, field, value) => {
+    setServiceOptions((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
+  const handleAddOption = () => {
+    setServiceOptions((prev) => [...prev, { time: '', price: '' }]);
+  };
+
+  const handleRemoveOption = (index) => {
+    setServiceOptions((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSaveService = async (e) => {
+    e.preventDefault();
+    if (!serviceNameEs.trim() && !serviceNameEn.trim()) {
+      showNotification('error', 'Por favor ingresa al menos el nombre del servicio.');
+      return;
+    }
+
+    setServiceUploadingFile(true);
+    try {
+      let finalImgUrl = serviceImageUrl;
+
+      // If it's a data URI, upload via persistent Cloudinary endpoint
+      if (serviceImageUrl.startsWith('data:')) {
+        try {
+          const upRes = await fetch('/api/upload', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              file: serviceImageUrl,
+              mediaType: 'image'
+            })
+          });
+          if (upRes.ok) {
+            const upData = await upRes.json();
+            if (upData.url) finalImgUrl = upData.url;
+          }
+        } catch {
+          // fallback to data URI if needed
+        }
+      }
+
+      const payload = {
+        name_es: serviceNameEs.trim(),
+        name_en: serviceNameEn.trim() || serviceNameEs.trim(),
+        desc_es: serviceDescEs.trim(),
+        desc_en: serviceDescEn.trim() || serviceDescEs.trim(),
+        image_url: finalImgUrl,
+        options: serviceOptions.filter((o) => o.time.trim() || o.price.trim())
+      };
+
+      let res;
+      if (editingService) {
+        res = await fetch('/api/services', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ ...payload, id: editingService.id })
+        });
+      } else {
+        res = await fetch('/api/services', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+      }
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al guardar servicio');
+
+      if (editingService) {
+        setServices((prev) => prev.map((s) => (s.id === editingService.id ? data.item : s)));
+        showNotification('success', 'Servicio actualizado correctamente');
+      } else {
+        setServices((prev) => [...prev, data.item]);
+        showNotification('success', 'Nuevo servicio creado con éxito');
+      }
+
+      if (onServicesUpdated) onServicesUpdated();
+      setIsServiceModalOpen(false);
+    } catch (err) {
+      showNotification('error', err.message);
+    } finally {
+      setServiceUploadingFile(false);
+    }
+  };
+
+  const handleDeleteService = async (id) => {
+    if (!window.confirm('¿Segura que deseas eliminar este servicio del menú?')) return;
+    try {
+      const res = await fetch(`/api/services?id=${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Error al eliminar servicio');
+
+      setServices((prev) => prev.filter((s) => s.id !== id));
+      showNotification('success', 'Servicio eliminado');
+      if (onServicesUpdated) onServicesUpdated();
+    } catch (err) {
+      showNotification('error', err.message);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -527,6 +708,15 @@ export default function AdminPanel({ isOpen, onClose }) {
 
               <button
                 type="button"
+                className={`admin-tab-btn ${activeTab === 'services' ? 'active' : ''}`}
+                onClick={() => setActiveTab('services')}
+              >
+                <Sparkles size={18} />
+                <span>Servicios ({services.length})</span>
+              </button>
+
+              <button
+                type="button"
                 className={`admin-tab-btn ${activeTab === 'gallery' ? 'active' : ''}`}
                 onClick={() => setActiveTab('gallery')}
               >
@@ -568,6 +758,16 @@ export default function AdminPanel({ isOpen, onClose }) {
               {activeTab === 'overview' && (
                 <div className="admin-overview">
                   <div className="admin-stats-grid">
+                    <div className="stat-card">
+                      <div className="stat-icon-wrapper" style={{ background: '#F0F4EE' }}>
+                        <Sparkles size={26} color="var(--color-primary-dark)" />
+                      </div>
+                      <div className="stat-info">
+                        <h3>{services.length}</h3>
+                        <p>Servicios Creados</p>
+                      </div>
+                    </div>
+
                     <div className="stat-card">
                       <div className="stat-icon-wrapper" style={{ background: '#EBF3E8' }}>
                         <MessageSquare size={26} color="var(--color-primary)" />
@@ -626,6 +826,17 @@ export default function AdminPanel({ isOpen, onClose }) {
                         type="button"
                         className="btn btn-primary"
                         onClick={() => {
+                          setActiveTab('services');
+                          handleOpenServiceModal();
+                        }}
+                      >
+                        <Plus size={18} />
+                        <span>Agregar Nuevo Servicio</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-outline"
+                        onClick={() => {
                           setActiveTab('gallery');
                           handleOpenGalleryModal();
                         }}
@@ -643,6 +854,95 @@ export default function AdminPanel({ isOpen, onClose }) {
                       </button>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* TAB SERVICIOS */}
+              {activeTab === 'services' && (
+                <div className="admin-services-section">
+                  <div className="admin-section-header">
+                    <div>
+                      <h3>Gestión de Servicios de Masajes</h3>
+                      <p>Agrega, modifica o elimina tarjetas de servicios que se muestran en la página web.</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => handleOpenServiceModal()}
+                    >
+                      <Plus size={18} />
+                      <span>Nuevo Servicio</span>
+                    </button>
+                  </div>
+
+                  {services.length === 0 ? (
+                    <div className="admin-empty">
+                      <Sparkles size={44} opacity={0.5} />
+                      <p>Aún no has agregado servicios adicionales. Los 6 servicios base se muestran en la web.</p>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ marginTop: '1rem' }}
+                        onClick={() => handleOpenServiceModal()}
+                      >
+                        Crear tu primer servicio
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="admin-gallery-grid">
+                      {services.map((srv) => (
+                        <div key={srv.id} className="admin-gallery-card">
+                          <div className="admin-media-thumb">
+                            <img src={srv.image_url || '/relaxing.jpg'} alt={srv.name_es || srv.name_en} />
+                            <span className="admin-type-tag">Servicio</span>
+                          </div>
+                          <div className="admin-gallery-meta">
+                            <h4>{srv.name_es || srv.name_en}</h4>
+                            {srv.name_en && srv.name_es && (
+                              <span style={{ fontSize: '0.78rem', color: 'var(--color-primary-dark)', marginBottom: '0.3rem' }}>
+                                EN: {srv.name_en}
+                              </span>
+                            )}
+                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '0.6rem' }}>
+                              {srv.desc_es || srv.desc_en}
+                            </p>
+                            
+                            {Array.isArray(srv.options) && srv.options.length > 0 && (
+                              <div style={{ background: '#FAF9F7', padding: '0.5rem', borderRadius: '8px', marginBottom: '0.8rem', fontSize: '0.8rem' }}>
+                                {srv.options.map((opt, idx) => (
+                                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.15rem 0' }}>
+                                    <span>{opt.time}</span>
+                                    <strong style={{ color: 'var(--color-accent)' }}>{opt.price}</strong>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            <div className="admin-card-actions">
+                              <button
+                                type="button"
+                                className="action-btn edit-btn"
+                                onClick={() => handleOpenServiceModal(srv)}
+                                title="Editar servicio"
+                              >
+                                <Edit2 size={16} />
+                                <span>Editar</span>
+                              </button>
+                              <button
+                                type="button"
+                                className="action-btn delete-btn"
+                                onClick={() => handleDeleteService(srv.id)}
+                                title="Eliminar servicio"
+                              >
+                                <Trash2 size={16} />
+                                <span>Eliminar</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -997,6 +1297,172 @@ export default function AdminPanel({ isOpen, onClose }) {
                     className="btn btn-primary"
                   >
                     {uploadingFile ? 'Guardando...' : editingItem ? 'Actualizar' : 'Publicar'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        {/* MODAL: CREAR / EDITAR SERVICIO DE MASAJE */}
+        {isServiceModalOpen && (
+          <div className="admin-submodal-backdrop" onClick={() => setIsServiceModalOpen(false)}>
+            <div className="admin-submodal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="admin-submodal-header">
+                <h3>{editingService ? 'Editar Servicio' : 'Nuevo Servicio de Masaje'}</h3>
+                <button
+                  type="button"
+                  className="admin-close-btn"
+                  onClick={() => setIsServiceModalOpen(false)}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveService} className="admin-gallery-form">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="form-group">
+                    <label>Nombre del Servicio (Español) *</label>
+                    <input
+                      type="text"
+                      value={serviceNameEs}
+                      onChange={(e) => setServiceNameEs(e.target.value)}
+                      placeholder="Ej. Masaje Aromaterapia"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Nombre del Servicio (Inglés)</label>
+                    <input
+                      type="text"
+                      value={serviceNameEn}
+                      onChange={(e) => setServiceNameEn(e.target.value)}
+                      placeholder="Ej. Aromatherapy Massage"
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="form-group">
+                    <label>Descripción (Español)</label>
+                    <textarea
+                      value={serviceDescEs}
+                      onChange={(e) => setServiceDescEs(e.target.value)}
+                      placeholder="Breve descripción del beneficio..."
+                      rows="2"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Descripción (Inglés)</label>
+                    <textarea
+                      value={serviceDescEn}
+                      onChange={(e) => setServiceDescEn(e.target.value)}
+                      placeholder="Brief benefit description..."
+                      rows="2"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Foto representativa del servicio</label>
+                  <label className="file-drop-zone">
+                    <Upload size={24} color="var(--color-primary)" />
+                    <span>Seleccionar foto desde tu dispositivo</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleServiceFilePicker}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                </div>
+
+                <div className="form-group">
+                  <label>O ingresar enlace directo a la imagen</label>
+                  <input
+                    type="url"
+                    value={serviceImageUrl}
+                    onChange={(e) => {
+                      setServiceImageUrl(e.target.value);
+                      setServiceFilePreview(e.target.value);
+                    }}
+                    placeholder="https://ejemplo.com/foto-masaje.jpg"
+                  />
+                </div>
+
+                {serviceFilePreview && (
+                  <div className="form-group">
+                    <label>Vista previa de la foto</label>
+                    <div className="upload-preview-box">
+                      <img src={serviceFilePreview} alt="Previsualización servicio" />
+                    </div>
+                  </div>
+                )}
+
+                {/* Opciones de duración y precio */}
+                <div className="form-group" style={{ marginTop: '1.2rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
+                    <label style={{ margin: 0, fontWeight: 600 }}>Opciones de Duración y Precio</label>
+                    <button
+                      type="button"
+                      className="btn btn-outline"
+                      style={{ padding: '0.3rem 0.7rem', fontSize: '0.8rem' }}
+                      onClick={handleAddOption}
+                    >
+                      + Agregar otra duración
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {serviceOptions.map((opt, index) => (
+                      <div key={index} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        <input
+                          type="text"
+                          value={opt.time}
+                          onChange={(e) => handleOptionChange(index, 'time', e.target.value)}
+                          placeholder="Duración (Ej. 60 Minutes)"
+                          style={{ flex: 2 }}
+                          required
+                        />
+                        <input
+                          type="text"
+                          value={opt.price}
+                          onChange={(e) => handleOptionChange(index, 'price', e.target.value)}
+                          placeholder="Precio (Ej. $100 USD)"
+                          style={{ flex: 1.5 }}
+                          required
+                        />
+                        {serviceOptions.length > 1 && (
+                          <button
+                            type="button"
+                            className="action-btn delete-btn"
+                            onClick={() => handleRemoveOption(index)}
+                            title="Quitar opción"
+                            style={{ padding: '0.6rem' }}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="admin-form-actions">
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setIsServiceModalOpen(false)}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={serviceUploadingFile}
+                    className="btn btn-primary"
+                  >
+                    {serviceUploadingFile ? 'Guardando...' : editingService ? 'Actualizar Servicio' : 'Guardar y Publicar'}
                   </button>
                 </div>
               </form>
