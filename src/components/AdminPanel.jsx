@@ -17,7 +17,10 @@ import {
   X,
   Upload,
   RefreshCw,
-  Star
+  Star,
+  User,
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 
 export default function AdminPanel({ isOpen, onClose }) {
@@ -30,6 +33,7 @@ export default function AdminPanel({ isOpen, onClose }) {
   const [password, setPassword] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   // Active admin tab
   const [activeTab, setActiveTab] = useState('overview'); // overview | gallery | reviews | bookings
@@ -420,55 +424,91 @@ export default function AdminPanel({ isOpen, onClose }) {
         ) : !currentUser ? (
           /* LOGIN SCREEN */
           <div className="admin-login-wrapper">
-            <div className="admin-login-card">
-              <div className="admin-login-header">
-                <div className="admin-key-icon">
-                  <Lock size={32} color="var(--color-primary)" />
+            <div className="admin-login-split">
+              <aside className="admin-login-brand">
+                <div className="admin-login-brand-glow"></div>
+                <div className="admin-login-brand-inner">
+                  <div className="admin-login-brand-icon">
+                    <Sparkles size={26} />
+                  </div>
+                  <h2>The Art of Relaxation</h2>
+                  <span className="admin-login-brand-tag">Sint Maarten</span>
+                  <p>Gestiona tu galería, reseñas y reservas desde un solo lugar.</p>
+                  <ul>
+                    <li><ShieldCheck size={16} /> Acceso privado y seguro</li>
+                    <li><ImageIcon size={16} /> Galería de trabajos</li>
+                    <li><Calendar size={16} /> Reservas de clientes</li>
+                  </ul>
                 </div>
-                <h2>Acceso Administrativo</h2>
-                <p>Ingresa tus credenciales de administradora para gestionar la página.</p>
+              </aside>
+
+              <div className="admin-login-card">
+                <div className="admin-login-header">
+                  <div className="admin-key-icon">
+                    <Lock size={26} color="var(--color-primary-dark)" />
+                  </div>
+                  <h2>Bienvenida</h2>
+                  <p>Ingresa tus credenciales para administrar la página.</p>
+                </div>
+
+                {loginError && (
+                  <div className="admin-alert admin-alert-error">
+                    <AlertCircle size={18} />
+                    <span>{loginError}</span>
+                  </div>
+                )}
+
+                <form onSubmit={handleLogin} className="admin-login-form">
+                  <div className="admin-field">
+                    <label htmlFor="admin-username">Usuario o correo electrónico</label>
+                    <div className="admin-input-wrap">
+                      <User size={18} className="admin-input-icon" />
+                      <input
+                        id="admin-username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="admin o tu correo"
+                        autoComplete="username"
+                        required
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+
+                  <div className="admin-field">
+                    <label htmlFor="admin-password">Contraseña</label>
+                    <div className="admin-input-wrap">
+                      <Lock size={18} className="admin-input-icon" />
+                      <input
+                        id="admin-password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        autoComplete="current-password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="admin-input-toggle"
+                        onClick={() => setShowPassword((v) => !v)}
+                        aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loginLoading}
+                    className="admin-login-submit"
+                  >
+                    {loginLoading ? 'Iniciando sesión...' : 'Entrar al panel'}
+                  </button>
+                </form>
               </div>
-
-              {loginError && (
-                <div className="admin-alert admin-alert-error">
-                  <AlertCircle size={18} />
-                  <span>{loginError}</span>
-                </div>
-              )}
-
-              <form onSubmit={handleLogin} className="admin-login-form">
-                <div className="form-group">
-                  <label>Usuario o Correo Electrónico</label>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="admin o tu correo"
-                    required
-                    autoFocus
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Contraseña</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loginLoading}
-                  className="btn btn-primary w-100"
-                  style={{ marginTop: '1rem', width: '100%' }}
-                >
-                  {loginLoading ? 'Iniciando sesión...' : 'Entrar al Panel'}
-                </button>
-              </form>
             </div>
           </div>
         ) : (
