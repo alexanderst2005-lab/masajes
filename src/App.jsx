@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, Mail, Menu, Leaf, Heart, Sparkles, X, Lock } from 'lucide-react';
+import { MapPin, Phone, Mail, Menu, Leaf, Heart, Sparkles, X } from 'lucide-react';
 import ReviewsSection from './components/ReviewsSection.jsx';
 import WorkGallerySection from './components/WorkGallerySection.jsx';
 import AdminPanel from './components/AdminPanel.jsx';
@@ -179,7 +179,19 @@ function App() {
   const [lang, setLang] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isAdminRoute, setIsAdminRoute] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const search = window.location.search.toLowerCase();
+    return (
+      path === '/admin' ||
+      path === '/admin/' ||
+      path.startsWith('/admin') ||
+      hash === '#admin' ||
+      search.includes('admin')
+    );
+  });
   const [customServices, setCustomServices] = useState([]);
   
   const [formData, setFormData] = useState({
@@ -223,16 +235,41 @@ function App() {
   // If services loaded from backend, use them so any edits from Admin Panel reflect immediately; otherwise fallback to default list
   const allServices = dynamicServices.length > 0 ? dynamicServices : t.services.list;
 
-  // Hash check for #admin URL shortcut
+  // Standalone Admin Route and keyboard shortcut listener
   useEffect(() => {
-    const checkHash = () => {
-      if (window.location.hash === '#admin') {
-        setIsAdminOpen(true);
+    const checkRoute = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      const search = window.location.search.toLowerCase();
+      const isAdmin = (
+        path === '/admin' ||
+        path === '/admin/' ||
+        path.startsWith('/admin') ||
+        hash === '#admin' ||
+        search.includes('admin')
+      );
+      setIsAdminRoute(isAdmin);
+    };
+
+    window.addEventListener('popstate', checkRoute);
+    window.addEventListener('hashchange', checkRoute);
+
+    // Discreet shortcut (Ctrl+Shift+A or Alt+A) to access admin panel
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) ||
+          (e.altKey && (e.key === 'A' || e.key === 'a'))) {
+        e.preventDefault();
+        window.history.pushState(null, '', '/admin');
+        setIsAdminRoute(true);
       }
     };
-    checkHash();
-    window.addEventListener('hashchange', checkHash);
-    return () => window.removeEventListener('hashchange', checkHash);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('popstate', checkRoute);
+      window.removeEventListener('hashchange', checkRoute);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   // Scroll animation hook
@@ -313,6 +350,26 @@ function App() {
     window.open(whatsappUrl, '_blank');
     closeBooking();
   };
+
+  // If user navigates to /admin, render ONLY the standalone Admin Panel (zero background page or scrolling)
+  if (isAdminRoute) {
+    return (
+      <AdminPanel
+        isOpen={true}
+        isStandalone={true}
+        onServicesUpdated={() => {
+          fetch('/api/services')
+            .then(res => res.ok ? res.json() : [])
+            .then(data => { if (Array.isArray(data)) setCustomServices(data); })
+            .catch(() => {});
+        }}
+        onClose={() => {
+          window.history.pushState(null, '', '/');
+          setIsAdminRoute(false);
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -704,16 +761,6 @@ function App() {
           
           <div className="footer-bottom">
             <p>{t.footer.rights}</p>
-            <div style={{ marginTop: '0.6rem' }}>
-              <button
-                type="button"
-                onClick={() => setIsAdminOpen(true)}
-                className="admin-access-footer-link"
-              >
-                <Lock size={13} />
-                <span>{t.nav.admin}</span>
-              </button>
-            </div>
           </div>
         </div>
       </footer>
@@ -785,23 +832,6 @@ function App() {
           </div>
         </div>
       )}
-
-      {/* Admin Panel Portal */}
-      <AdminPanel
-        isOpen={isAdminOpen}
-        onServicesUpdated={() => {
-          fetch('/api/services')
-            .then(res => res.ok ? res.json() : [])
-            .then(data => { if (Array.isArray(data)) setCustomServices(data); })
-            .catch(() => {});
-        }}
-        onClose={() => {
-          setIsAdminOpen(false);
-          if (window.location.hash === '#admin') {
-            history.replaceState(null, '', ' ');
-          }
-        }}
-      />
     </>
   );
 }

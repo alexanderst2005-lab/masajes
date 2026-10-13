@@ -2416,6 +2416,79 @@ footer {
 }
 
 /* ========================================================
+   PANEL DE ADMINISTRACIÓN STANDALONE / INDEPENDIENTE
+   (Página 100% aislada, cero fondo de página web ni scroll)
+   ======================================================== */
+.admin-standalone-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: #F6F4F0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-standalone-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #F6F4F0;
+}
+
+.admin-standalone-container .admin-body {
+  min-height: calc(100vh - 78px);
+}
+
+.admin-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-back-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateX(-2px);
+}
+
+.admin-login-back-container {
+  margin-top: 1.6rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.admin-login-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.admin-login-back-btn:hover {
+  color: var(--color-primary-dark);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ========================================================
    REDISEÑO PROFESIONAL DEL PANEL DE ADMINISTRACIÓN
    ======================================================== */
 .admin-portal-overlay {

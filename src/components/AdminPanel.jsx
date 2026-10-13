@@ -20,11 +20,12 @@ import {
   Star,
   User,
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  ArrowLeft
 } from 'lucide-react';
 import { getVideoPoster } from './WorkGallerySection.jsx';
 
-export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
+export default function AdminPanel({ isOpen, onClose, onServicesUpdated, isStandalone = false }) {
   const [token, setToken] = useState(() => localStorage.getItem('sxm_admin_token') || '');
   const [currentUser, setCurrentUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(() => !!localStorage.getItem('sxm_admin_token'));
@@ -579,11 +580,11 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen && !isStandalone) return null;
 
   return (
-    <div className="admin-portal-overlay">
-      <div className="admin-portal-container">
+    <div className={isStandalone ? "admin-standalone-wrapper" : "admin-portal-overlay"}>
+      <div className={isStandalone ? "admin-standalone-container" : "admin-portal-container"}>
         {/* Header */}
         <div className="admin-portal-header">
           <div className="admin-brand">
@@ -596,6 +597,15 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
             </div>
           </div>
           <div className="admin-header-actions">
+            <button
+              type="button"
+              className="admin-back-btn"
+              onClick={onClose}
+              title="Volver a la página web"
+            >
+              <ArrowLeft size={18} />
+              <span>Volver a la web</span>
+            </button>
             {currentUser && (
               <button
                 type="button"
@@ -607,14 +617,16 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
                 <span className="hide-on-mobile">Cerrar sesión</span>
               </button>
             )}
-            <button
-              type="button"
-              className="admin-close-btn"
-              onClick={onClose}
-              aria-label="Cerrar panel"
-            >
-              <X size={22} />
-            </button>
+            {!isStandalone && (
+              <button
+                type="button"
+                className="admin-close-btn"
+                onClick={onClose}
+                aria-label="Cerrar panel"
+              >
+                <X size={22} />
+              </button>
+            )}
           </div>
         </div>
 
@@ -723,6 +735,17 @@ export default function AdminPanel({ isOpen, onClose, onServicesUpdated }) {
                     {loginLoading ? 'Iniciando sesión...' : 'Entrar al panel'}
                   </button>
                 </form>
+
+                <div className="admin-login-back-container">
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="admin-login-back-btn"
+                  >
+                    <ArrowLeft size={16} />
+                    <span>Volver al sitio web principal</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
