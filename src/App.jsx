@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, Mail, Calendar, Menu, Clock, Leaf, Heart, Sparkles, X, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Menu, Leaf, Heart, Sparkles, X, Lock } from 'lucide-react';
+import ReviewsSection from './components/ReviewsSection.jsx';
+import WorkGallerySection from './components/WorkGallerySection.jsx';
+import AdminPanel from './components/AdminPanel.jsx';
 import './index.css';
 
 // WhatsApp Business Number (Editable)
@@ -8,7 +11,7 @@ const WHATSAPP_NUMBER = '590690221868'; // e.g. '1234567890' (Include country co
 // Content structure to allow easy editing and bilingual support
 const content = {
   en: {
-    nav: { home: 'Home', services: 'Services', about: 'About', benefits: 'Benefits', contact: 'Contact', book: 'Book a Massage' },
+    nav: { home: 'Home', services: 'Services', work: 'Our Work', about: 'About', benefits: 'Benefits', reviews: 'Reviews', contact: 'Contact', book: 'Book a Massage', admin: 'Admin Portal' },
     hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: "With over 5 years of professional experience, we offer mobile massage therapy designed to help you relax, release tension, and feel your best.\n\nServing Sint Maarten & Saint Martin\nMobile massage services available across both sides of the island.", bookBtn: 'Book Your Massage', exploreBtn: 'Explore Services', note: 'Your wellness starts here.' },
     services: { title: 'Our Massage Services', subtitle: 'Personalized massage experiences created to help you relax, recover, and take care of your body.', book: 'Book Now', list: [
       { id: 1, name: 'Relaxing Massage', desc: 'A calming massage focused on relaxation and stress relief.', time: '60 / 90 Minutes', price: 'From $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
@@ -59,7 +62,7 @@ const content = {
     }
   },
   es: {
-    nav: { home: 'Inicio', services: 'Servicios', about: 'Sobre mí', benefits: 'Beneficios', contact: 'Contacto', book: 'Reservar un masaje' },
+    nav: { home: 'Inicio', services: 'Servicios', work: 'Nuestro Trabajo', about: 'Sobre mí', benefits: 'Beneficios', reviews: 'Reseñas', contact: 'Contacto', book: 'Reservar un masaje', admin: 'Panel de Administración' },
     hero: { tag: 'Sxm Mobile Massage', title: 'The Art of Relaxation Sxm', desc: "Con más de 5 años de experiencia profesional, ofrecemos terapia de masajes a domicilio diseñada para ayudarte a relajarte, liberar tensiones y sentirte mejor.\n\nSirviendo a Sint Maarten y Saint Martin\nServicios de masajes a domicilio disponibles en ambos lados de la isla.", bookBtn: 'Reserva tu masaje', exploreBtn: 'Ver servicios', note: 'Tu bienestar comienza aquí.' },
     services: { title: 'Nuestros Servicios', subtitle: 'Experiencias de masaje personalizadas creadas para ayudarte a relajar, recuperar y cuidar tu cuerpo.', book: 'Reservar', list: [
       { id: 1, name: 'Masaje Relajante', desc: 'Un masaje calmante enfocado en la relajación y el alivio del estrés.', time: '60 / 90 Minutes', price: 'Desde $90 USD', options: [{time: '60 Minutes', price: '$90 USD'}, {time: '90 Minutes', price: '$130 USD'}], img: '/relaxing.jpg' },
@@ -124,7 +127,7 @@ function App() {
   const [lang, setLang] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState('');
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     service: '',
@@ -138,6 +141,18 @@ function App() {
   });
 
   const t = content[lang];
+
+  // Hash check for #admin URL shortcut
+  useEffect(() => {
+    const checkHash = () => {
+      if (window.location.hash === '#admin') {
+        setIsAdminOpen(true);
+      }
+    };
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, []);
 
   // Scroll animation hook
   useEffect(() => {
@@ -204,6 +219,13 @@ function App() {
 "Hola, quisiera solicitar esta cita para masaje. Por favor, confírmame la disponibilidad."`;
     }
 
+    // Save to Neon database via API (best-effort, doesn't block WhatsApp)
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...formData, lang })
+    }).catch(() => {});
+
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
     
@@ -222,8 +244,10 @@ function App() {
           <nav className="nav-links">
             <a href="#home" className="nav-link">{t.nav.home}</a>
             <a href="#services" className="nav-link">{t.nav.services}</a>
+            <a href="#work-gallery" className="nav-link">{t.nav.work}</a>
             <a href="#about" className="nav-link">{t.nav.about}</a>
             <a href="#benefits" className="nav-link">{t.nav.benefits}</a>
+            <a href="#reviews" className="nav-link">{t.nav.reviews}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
             
             <div className="lang-switch desktop-lang">
@@ -252,8 +276,10 @@ function App() {
           <div className="mobile-menu fade-in visible">
             <a href="#home" onClick={() => setMobileMenuOpen(false)}>{t.nav.home}</a>
             <a href="#services" onClick={() => setMobileMenuOpen(false)}>{t.nav.services}</a>
+            <a href="#work-gallery" onClick={() => setMobileMenuOpen(false)}>{t.nav.work}</a>
             <a href="#about" onClick={() => setMobileMenuOpen(false)}>{t.nav.about}</a>
             <a href="#benefits" onClick={() => setMobileMenuOpen(false)}>{t.nav.benefits}</a>
+            <a href="#reviews" onClick={() => setMobileMenuOpen(false)}>{t.nav.reviews}</a>
             <a href="#contact" onClick={() => setMobileMenuOpen(false)}>{t.nav.contact}</a>
           </div>
         )}
@@ -359,8 +385,11 @@ function App() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="container fade-in">
+      {/* Dynamic Nuestro Trabajo Gallery Section */}
+      <WorkGallerySection lang={lang} />
+
+      {/* Gallery Mood / Ambient */}
+      <section className="container fade-in" style={{ padding: '3rem 2rem 5rem' }}>
         <h2 className="section-title">{t.gallery.title}</h2>
         <p className="section-subtitle">{t.gallery.subtitle}</p>
         
@@ -410,32 +439,8 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="testimonials-section fade-in">
-        <h2 className="section-title">{t.testimonials.title}</h2>
-        {/* Desktop grid */}
-        <div className="testimonials-grid">
-          {t.testimonials.list.map((testimonial, i) => (
-            <div key={i} className="testimonial-card fade-in">
-              <MessageCircle className="quote-icon" size={40} />
-              <p className="testimonial-text">"{testimonial.text}"</p>
-              <h4 className="testimonial-author">— {testimonial.author}</h4>
-            </div>
-          ))}
-        </div>
-        {/* Mobile carousel */}
-        <div className="testimonials-carousel-wrapper">
-          <div className="testimonials-carousel-track">
-            {[...t.testimonials.list, ...t.testimonials.list].map((testimonial, i) => (
-              <div key={i} className="testimonial-card-slide">
-                <MessageCircle className="quote-icon" size={28} />
-                <p className="testimonial-text">"{testimonial.text}"</p>
-                <h4 className="testimonial-author">— {testimonial.author}</h4>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Public Real Client Reviews Section */}
+      <ReviewsSection lang={lang} />
 
       {/* Booking CTA */}
       <section className="booking-section fade-in">
@@ -503,7 +508,17 @@ function App() {
           </div>
           
           <div className="footer-bottom">
-            {t.footer.rights}
+            <p>{t.footer.rights}</p>
+            <div style={{ marginTop: '0.6rem' }}>
+              <button
+                type="button"
+                onClick={() => setIsAdminOpen(true)}
+                className="admin-access-footer-link"
+              >
+                <Lock size={13} />
+                <span>{t.nav.admin}</span>
+              </button>
+            </div>
           </div>
         </div>
       </footer>
@@ -575,6 +590,17 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Admin Panel Portal */}
+      <AdminPanel
+        isOpen={isAdminOpen}
+        onClose={() => {
+          setIsAdminOpen(false);
+          if (window.location.hash === '#admin') {
+            history.replaceState(null, '', ' ');
+          }
+        }}
+      />
     </>
   );
 }
